@@ -1458,7 +1458,7 @@ VirtualJoystick.prototype._check3D = function()
             window.addEventListener('resize', onWindowResize, false);
 
             //var see = false;
-            setInterval(function() {
+            setInterval(function() {s
 
                 var x = joystick._stickX;
                 var y = joystick._stickY;
@@ -1496,33 +1496,9 @@ VirtualJoystick.prototype._check3D = function()
                         console.log(res);
                     });
 
-
-
-
-
-
-
-                    /*
-
-                                        var xmlhttp = new XMLHttpRequest();
-
-                                        xmlhttp.onreadystatechange = function() {
-                                            if (xmlhttp.readyState == XMLHttpRequest.DONE) {
-                                                if (xmlhttp.status == 200) {
-                                                    alert("hi");
-                                                } else if (xmlhttp.status == 400) {
-                                                    alert('There was an error 400');
-                                                } else {
-                                                    console.log(xmlhttp);
-                                                }
-                                            }
-                                        };
-
-                                        xmlhttp.open("POST", "https://guarded-ocean-62611.herokuapp.com/?xcoord=" + x + "&ycoord=" + y, true);
-                                        xmlhttp.send();*/
                 }
 
-            }, 200);
+            }, 42);
 
             //https://guarded-ocean-62611.herokuapp.com/?xcoord=0&ycoord=0
 
