@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SUMMER JUKEBOX FEST </title>
+</head>
+
+<body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <script src="http://threejs.org/build/three.min.js"></script>
+    <script src="http://jeromeetienne.github.io/threex.keyboardstate/threex.keyboardstate.js"></script>
+    <script src="virtualjoystick.js"></script>
+    <script>
+        $(document).ready(function() {
+
+
+
+
+
+
+            var scene = new THREE.Scene();
+            var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+            var keyboard = new THREEx.KeyboardState();
+
+            var width = document.body.clientWidth; //document.width is obsolete
+            //var height = document.body.clientHeight; //document.height is obsolete
+
+            var joystick = new VirtualJoystick({
+                mouseSupport: true,
+                stationaryBase: true,
+                baseX: width / 2,
+                baseY: 300,
+                limitStickTravel: true,
+                stickRadius: 50
+            });
+
+            var renderer = new THREE.WebGLRenderer();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+            window.addEventListener('resize', onWindowResize, false);
+
+            //var see = false;
+            setInterval(function() {
+
+                var x = joystick._stickX;
+                var y = joystick._stickY;
+
+                if (joystick._pressed == true) {
+                    y = Math.round(y - 300);
+                    x = Math.round(x - width / 2);
+                } else {
+                    y = 0;
+                    x = 0;
+                }
+                /* if(see ==false){
+                     console.log(joystick);
+                     see = true;
+                 }*/
+
+
+                renderer.render(scene, camera);
+
+                if (x != 0 && y != 0) {
+
+                    var info = {
+                        "xcoord": x,
+                        "ycoord": y
+                    }
+
+
+                    $.ajax({
+                        url: "https://guarded-ocean-62611.herokuapp.com/",
+                        crossDomain: true,
+                        type:'GET',
+                        dataType: 'jsonp',
+                        data: info,
+                    }).then(function(res){
+                        console.log(res);
+                    });
+
+
+
+
+
+
+
+                    /*
+
+                                        var xmlhttp = new XMLHttpRequest();
+
+                                        xmlhttp.onreadystatechange = function() {
+                                            if (xmlhttp.readyState == XMLHttpRequest.DONE) {
+                                                if (xmlhttp.status == 200) {
+                                                    alert("hi");
+                                                } else if (xmlhttp.status == 400) {
+                                                    alert('There was an error 400');
+                                                } else {
+                                                    console.log(xmlhttp);
+                                                }
+                                            }
+                                        };
+
+                                        xmlhttp.open("POST", "https://guarded-ocean-62611.herokuapp.com/?xcoord=" + x + "&ycoord=" + y, true);
+                                        xmlhttp.send();*/
+                }
+
+            }, 100);
+
+            //https://guarded-ocean-62611.herokuapp.com/?xcoord=0&ycoord=0
+
+
+
+
+
+
+
+
+
+            function onWindowResize() {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }
+        });
+    </script>
+</body>
+
+</html>
