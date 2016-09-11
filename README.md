@@ -2,7 +2,7 @@
 
 ###Project Scope:
 
-To help Authors and advertisers to reach their target audiences by helping:
+To assist authors and advertisers to reach their target audiences by helping:
 
 Authors - Discover similar authors and their userbase
 
