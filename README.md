@@ -4,11 +4,11 @@
 
 To help Authors and advertisers to reach their target audiences by helping:
 
-authors - discover similar authors and their userbase
+Authors - Discover similar authors and their userbase
 
-readers - discover recommended authors
+Readers - Find recommended authors
 
-advertisers - locate the most influential authors
+Advertisers - Locate the most influential authors
 
 We used the wattpad dataset from tranquint to generate the stats to visualize the data.
 
