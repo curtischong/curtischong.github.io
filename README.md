@@ -3,7 +3,9 @@
 ####Usage
 ###Databricks
 In our public notebook at:
-``````
+``
+https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/76642992983592/2291514426826163/6108891135845519/latest.html```
+
 you can view our data exploration. And our recommendation algorithum uses features: age, language, gender, and platform 
 to predict author recommendations for new readers that have the same follower characteristics.
 
@@ -14,3 +16,5 @@ Simply click on a red point to view all of the followers for that author and som
 
 From the recommendation algorithum in our databricks, you will receive the a list of 3 author ids.
 simply paste that author id into the search box and it'll popup on screen (along with its followers)
+
+our ppt is here
