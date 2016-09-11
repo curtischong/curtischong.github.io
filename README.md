@@ -1,10 +1,13 @@
 ### wattpad dataset insights
 
-###project scope:
+###Project Scope:
 
 To help Authors and advertisers to reach their target audiences by helping:
+
 authors - discover similar authors and their userbase
+
 readers - discover recommended authors
+
 advertisers - locate the most influential authors
 
 We used the wattpad dataset from tranquint to generate the stats to visualize the data.
@@ -25,7 +28,7 @@ https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93e
 you can view our recommendation algorithum which uses the features: age, language, gender, and platform 
 to predict author recommendations for new readers that have the same follower characteristics.
 
-###maps
+###Maps
 go to splacorn/github.io to view the map visualiztion of our hack.
 Note: due to a lack of a powerful server try not to click on the map or else major lag will occur. clicking on the red points is okay
 Simply click on a red point to view all of the followers for that author and some additional statistics.
