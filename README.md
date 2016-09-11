@@ -13,12 +13,14 @@ We used the wattpad dataset from tranquint to generate the stats to visualize th
 ###Databricks
 In our data exploration notebook at:
 ```
-https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/76642992983592/2291514426826163/6108891135845519/latest.html```
+https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/76642992983592/2291514426826163/6108891135845519/latest.html
+```
 
 you can view our data exploration.
 
 In our submission notebook:
-```https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/76642992983592/1145876117047168/6108891135845519/latest.html
+```
+https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/76642992983592/1145876117047168/6108891135845519/latest.html
 ```
 you can view our recommendation algorithum which uses the features: age, language, gender, and platform 
 to predict author recommendations for new readers that have the same follower characteristics.
