@@ -1,4 +1,4 @@
-### Wattpad Dtaset Insights
+### Wattpad Dataset Insights
 
 ###Project Scope:
 
@@ -12,7 +12,7 @@ advertisers - locate the most influential authors
 
 We used the wattpad dataset from tranquint to generate the stats to visualize the data.
 
-####Usage
+######Usage
 ####Databricks
 In our data exploration notebook at:
 ```
