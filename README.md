@@ -29,7 +29,7 @@ you can view our recommendation algorithum which uses the features: age, languag
 to predict author recommendations for new readers that have the same follower characteristics.
 
 ####Maps
-go to splacorn/github.io to view the map visualiztion of our hack.
+go to ```splacorn/github.io``` to view the map visualiztion of our hack.
 Note: due to a lack of a powerful server try not to click on the map or else major lag will occur. clicking on the red points is okay
 Simply click on a red point to view all of the followers for that author and some additional statistics.
 
