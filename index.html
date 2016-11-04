@@ -97,7 +97,8 @@
         left: 60px;
         color: white;
     }
-    #co2_by_car{
+    
+    #co2_by_car {
         position: relative;
         top: 70px;
         left: 60px;
@@ -113,7 +114,8 @@
         color: white;
         cursor: pointer;
     }
-    #display_info{
+    
+    #display_info {
         position: absolute;
         top: 0px;
         left: 1000px;
@@ -126,8 +128,10 @@
     <div id="map"></div>
     <div id="display_info">
         <h1 style="color: white; position: relative; left: 110px;">CatchIt!</h1>
-        <input id="startLoc" type="text" placeholder="start Location" /><br>
-        <input id="endLoc" type="text" placeholder="end Location" /><br>
+        <input id="startLoc" type="text" placeholder="start Location" />
+        <br>
+        <input id="endLoc" type="text" placeholder="end Location" />
+        <br>
         <select class="formdrop" id="type_vehicle">
             <option value="" disabled selected style="display: none;">Your Vehicle</option>
             <option value="0.1270059">Passenger</option>
@@ -166,6 +170,7 @@
                     if (status == google.maps.DirectionsStatus.OK) {
                         directionsDisplay.setDirections(response);
                         var routeIntruct = response.routes[0].legs[0].steps;
+                        var totCo2 = 0
                         for (var i = 0; i < routeIntruct.length; i++) {
                             var text = routeIntruct[i].instructions;
                             //this instruction is a busing instruction
@@ -176,27 +181,29 @@
                                         var int = parseInt(arr[a]);
                                         for (var b = 0; b < transit_data.data.length; b++) {
                                             if (transit_data.data[b].route_short_name == int) {
-                                                $("#co2_per_person").html("You'll emmit " + (transit_data.data[b].emmisions_per_person-0.35) + "Kg of co2 on the Bus");
-                                                var e = document.getElementById("type_vehicle");
-                                                var selected_vehicle = e.options[e.selectedIndex].value;
-                                                var norm_distance = response.routes[0].legs[0].distance.text;
-                                                norm_distance = norm_distance.substring(0,norm_distance.length-3);
-                                                //norm emisions = typical ttc co2 emmisions
-                                                console.log(parseFloat(norm_distance) * selected_vehicle);
-                                                $("#co2_by_car").html("and you'll save " + ((parseFloat(norm_distance) * selected_vehicle) - (transit_data.data[b].emmisions_per_person-0.35)) +" Kg of co2");
-                                                //console.log(selected_vehicle);
-                                                console.log(transit_data.data[b].emmisions_per_person);
+                                                totCo2+=transit_data.data[b].emmisions_per_person;
                                             }
                                         }
                                     }
                                 }
                             }
                         }
+                        $("#co2_per_person").html("You'll emmit " + (totCo2*0.7) + "Kg of co2 on the Bus");
+                        console.log(totCo2);
+                        var e = document.getElementById("type_vehicle");
+                        var selected_vehicle = e.options[e.selectedIndex].value;
+                        var norm_distance = response.routes[0].legs[0].distance.text;
+                        norm_distance = norm_distance.substring(0, norm_distance.length - 3);
+                        //norm emisions = typical ttc co2 emmisions
+                        console.log(parseFloat(norm_distance) * selected_vehicle);
+                        $("#co2_by_car").html("and you'll save " + ((parseFloat(norm_distance) * selected_vehicle) - (totCo2*0.7)) + " Kg of co2");
+                        //console.log(selected_vehicle);
+                        console.log(transit_data.data[b].emmisions_per_person);
                         $("#panel").css("background-color", "white");
                     }
                 });
-                //$("#startLoc").val("");
-                //$("#endLoc").val("");
+                $("#startLoc").val("");
+                $("#endLoc").val("");
             });
         });
         var transit_data = {
