@@ -187,7 +187,7 @@
                                 }
                             }
                         }
-                        $("#co2_per_person").html("You'll emmit " + (totCo2*0.7) + "Kg of co2 on the Bus");
+                        $("#co2_per_person").html("You'll emmit " + (totCo2*0.7).toPrecision(4) + "Kg of co2 on the Bus");
                         console.log(totCo2);
                         var e = document.getElementById("type_vehicle");
                         var selected_vehicle = e.options[e.selectedIndex].value;
@@ -195,7 +195,7 @@
                         norm_distance = norm_distance.substring(0, norm_distance.length - 3);
                         //norm emisions = typical ttc co2 emmisions
                         console.log(parseFloat(norm_distance) * selected_vehicle);
-                        $("#co2_by_car").html("and you'll save " + Math.abs(((parseFloat(norm_distance) * selected_vehicle) - (totCo2*0.7))) + " Kg of co2");
+                        $("#co2_by_car").html("and you'll save " + Math.abs(((parseFloat(norm_distance) * selected_vehicle) - (totCo2*0.7))).toPrecision(4) + " Kg of co2");
                         //console.log(selected_vehicle);
                         console.log(transit_data.data[b].emmisions_per_person);
                         $("#panel").css("background-color", "white");
