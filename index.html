@@ -47,17 +47,20 @@
     
     #panel {
         position: absolute;
-        width: 315px;
+        width: 340px;
         height: 1000px;
         top: 300px;
         background-color: #e67e22;
         color: white;
+        left: 0px;
+        margin: 0px;
+        padding: 0px;
     }
     
     #startLoc {
         position: relative;
         top: 20px;
-        left: 30px;
+        left: 40px;
         width: 240px;
         padding: 5px;
         border: none;
@@ -69,7 +72,7 @@
     #endLoc {
         position: relative;
         top: 20px;
-        left: 30px;
+        left: 40px;
         width: 240px;
         padding: 5px;
         border: none;
@@ -81,7 +84,7 @@
     #search {
         position: relative;
         top: 60px;
-        left: 100px;
+        left: 120px;
         background-color: #e67e22;
         border: 1px solid white;
         color: white;
@@ -94,21 +97,21 @@
     #co2_per_person {
         position: relative;
         top: 70px;
-        left: 60px;
+        left: 70px;
         color: white;
     }
     
     #co2_by_car {
         position: relative;
         top: 70px;
-        left: 60px;
+        left: 70px;
         color: white;
     }
     
     #type_vehicle {
         position: relative;
         top: 40px;
-        left: 110px;
+        left: 125px;
         border: none;
         background-color: #e67e22;
         color: white;
@@ -117,16 +120,15 @@
     #display_info {
         position: absolute;
         top: 0px;
-        left: 1000px;
-        width: 215px;
-        right: 515px;
+        width: 340px;
+        right: 0px;
     }
 </style>
 
 <body style="font-family: Arial; font-size: 12px;">
     <div id="map"></div>
     <div id="display_info">
-        <h1 style="color: white; position: relative; left: 110px;">CatchIt!</h1>
+        <h1 style="color: white; position: relative; left: 120px; width: 0px;">CatchIt!</h1>
         <input id="startLoc" type="text" placeholder="Start Location" />
         <br>
         <input id="endLoc" type="text" placeholder="End Location" />
@@ -137,9 +139,9 @@
             <option value="0.322">Suv</option>
             <option value="0.2878292">Van</option>
         </select>
-        <div id="search">Search</div>
-        <div id="co2_per_person"></div>
-        <div id="co2_by_car"></div>
+        <div id="search" style="padding: 0px; margin: 0px;">Search</div>
+        <div id="co2_per_person" style="width: 250px; margin: 0px;"></div>
+        <div id="co2_by_car" style="width: 250px; margin: 0px;"></div>
         <div id="panel"></div>
     </div>
     <script type="text/javascript">
@@ -156,6 +158,9 @@
         directionsDisplay.setMap(map);
         directionsDisplay.setPanel(document.getElementById('panel'));
         $(document).ready(function () {
+            $("#map").css("width",window.innerWidth-360);
+            $("#map").css("height",window.innerHeight);
+            $("#panel").css("height",window.innerHeight-340);
             $("#search").on("click", function () {
                 var request = {
                     origin: $("#startLoc").val() + ' Toronto'
