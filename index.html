@@ -2,1990 +2,1993 @@
 <html>
 
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <title>Google Maps API v3 Directions Example</title>
-    <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyBnTsP8_P-SIc9HvBFy4-w34PrxGBxc-uw"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <title>Google Maps API v3 Directions Example</title>
+  <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyBnTsP8_P-SIc9HvBFy4-w34PrxGBxc-uw"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 <style>
-    body {
-        background-color: #e67e22;
-    }
-    
-    input:focus,
-    select:focus,
-    textarea:focus,
-    button:focus {
-        outline: none;
-    }
-    
-    ::-webkit-input-placeholder {
-        color: white;
-    }
-    
-    :-moz-placeholder {
-        /* Firefox 18- */
-        color: white;
-    }
-    
-    ::-moz-placeholder {
-        /* Firefox 19+ */
-        color: white;
-    }
-    
-    :-ms-input-placeholder {
-        color: white;
-    }
-    
-    #map {
-        position: absolute;
-        width: 1000px;
-        height: 1000px;
-        top: 0px;
-        left: 0px;
-    }
-    
-    #panel {
-        position: absolute;
-        width: 340px;
-        height: 1000px;
-        top: 300px;
-        background-color: #e67e22;
-        color: white;
-        left: 0px;
-        margin: 0px;
-        padding: 0px;
-    }
-    
-    #startLoc {
-        position: relative;
-        top: 20px;
-        left: 40px;
-        width: 240px;
-        padding: 5px;
-        border: none;
-        background-color: #e67e22;
-        border-bottom: 1px solid white;
-        color: white;
-    }
-    
-    #endLoc {
-        position: relative;
-        top: 20px;
-        left: 40px;
-        width: 240px;
-        padding: 5px;
-        border: none;
-        background-color: #e67e22;
-        border-bottom: 1px solid white;
-        color: white;
-    }
-    
-    #search {
-        position: relative;
-        top: 60px;
-        left: 120px;
-        background-color: #e67e22;
-        border: 1px solid white;
-        color: white;
-        cursor: pointer;
-        padding: 5px;
-        text-align: center;
-        width: 100px;
-    }
-    
-    #co2_per_person {
-        position: relative;
-        top: 70px;
-        left: 70px;
-        color: white;
-    }
-    
-    #co2_by_car {
-        position: relative;
-        top: 70px;
-        left: 70px;
-        color: white;
-    }
-    
-    #type_vehicle {
-        position: relative;
-        top: 40px;
-        left: 125px;
-        border: none;
-        background-color: #e67e22;
-        color: white;
-        cursor: pointer;
-    }
-    #display_info {
-        position: absolute;
-        top: 0px;
-        width: 340px;
-        right: 0px;
-    }
+body {
+  background-color: #e67e22;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+}
+
+::-webkit-input-placeholder {
+  color: white;
+}
+
+:-moz-placeholder {
+  /* Firefox 18- */
+  color: white;
+}
+
+::-moz-placeholder {
+  /* Firefox 19+ */
+  color: white;
+}
+
+:-ms-input-placeholder {
+  color: white;
+}
+
+#map {
+  position: absolute;
+  width: 1000px;
+  height: 1000px;
+  top: 0px;
+  left: 0px;
+}
+
+#panel {
+  position: absolute;
+  width: 340px;
+  height: 1000px;
+  top: 300px;
+  background-color: #e67e22;
+  color: white;
+  left: 0px;
+  margin: 0px;
+  padding: 0px;
+}
+
+#startLoc {
+  position: relative;
+  top: 20px;
+  left: 40px;
+  width: 240px;
+  padding: 5px;
+  border: none;
+  background-color: #e67e22;
+  border-bottom: 1px solid white;
+  color: white;
+}
+
+#endLoc {
+  position: relative;
+  top: 20px;
+  left: 40px;
+  width: 240px;
+  padding: 5px;
+  border: none;
+  background-color: #e67e22;
+  border-bottom: 1px solid white;
+  color: white;
+}
+
+#search {
+  position: relative;
+  top: 60px;
+  left: 120px;
+  background-color: #e67e22;
+  border: 1px solid white;
+  color: white;
+  cursor: pointer;
+  padding: 5px;
+  text-align: center;
+  width: 100px;
+}
+
+#co2_per_person {
+  position: relative;
+  top: 70px;
+  left: 70px;
+  color: white;
+}
+
+#co2_by_car {
+  position: relative;
+  top: 70px;
+  left: 70px;
+  color: white;
+}
+
+#type_vehicle {
+  position: relative;
+  top: 40px;
+  left: 125px;
+  border: none;
+  background-color: #e67e22;
+  color: white;
+  cursor: pointer;
+}
+#display_info {
+  position: absolute;
+  top: 0px;
+  width: 340px;
+  right: 0px;
+}
 </style>
 
 <body style="font-family: Arial; font-size: 12px;">
-    <div id="map"></div>
-    <div id="display_info">
-        <h1 style="color: white; position: relative; left: 120px; width: 0px;">CatchIt!</h1>
-        <input id="startLoc" type="text" placeholder="Start Location" />
-        <br>
-        <input id="endLoc" type="text" placeholder="End Location" />
-        <br>
-        <select class="formdrop" id="type_vehicle">
-            <option value="" disabled selected style="display: none;">Your Vehicle</option>
-            <option value="0.1270059">Passenger</option>
-            <option value="0.322">Suv</option>
-            <option value="0.2878292">Van</option>
-        </select>
-        <div id="search" style="padding: 0px; margin: 0px;">Search</div>
-        <div id="co2_per_person" style="width: 250px; margin: 0px;"></div>
-        <div id="co2_by_car" style="width: 250px; margin: 0px;"></div>
-        <div id="panel"></div>
-    </div>
-    <script type="text/javascript">
-        var directionsService = new google.maps.DirectionsService();
-        var directionsDisplay = new google.maps.DirectionsRenderer();
-        var map = new google.maps.Map(document.getElementById('map'), {
-            center: {
-                lat: 43.623650
-                , lng: -79.420166
-            }
-            , zoom: 11
-            , mapTypeId: google.maps.MapTypeId.ROADMAP
-        });
-        directionsDisplay.setMap(map);
-        directionsDisplay.setPanel(document.getElementById('panel'));
-        $(document).ready(function () {
-            $("#map").css("width",window.innerWidth-360);
-            $("#map").css("height",window.innerHeight);
-            $("#panel").css("height",window.innerHeight-340);
-            $("#search").on("click", function () {
-                var request = {
-                    origin: $("#startLoc").val() + ' Toronto'
-                    , destination: $("#endLoc").val() + ' Toronto'
-                    , travelMode: google.maps.DirectionsTravelMode.TRANSIT
-                    , transitOptions: {
-                        modes: ["BUS"]
-                    }
-                };
-                directionsService.route(request, function (response, status) {
-                    if (status == google.maps.DirectionsStatus.OK) {
-                        directionsDisplay.setDirections(response);
-                        var routeIntruct = response.routes[0].legs[0].steps;
-                        var totCo2 = 0
-                        for (var i = 0; i < routeIntruct.length; i++) {
-                            var text = routeIntruct[i].instructions;
-                            //this instruction is a busing instruction
-                            if (text.indexOf('Bus') >= 0) {
-                                var arr = text.split(" ");
-                                for (var a = 0; a < arr.length; a++) {
-                                    if (!isNaN(parseInt(arr[a]))) {
-                                        var int = parseInt(arr[a]);
-                                        for (var b = 0; b < transit_data.data.length; b++) {
-                                            if (transit_data.data[b].route_short_name == int) {
-                                                totCo2+=transit_data.data[b].emmisions_per_person;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        $("#co2_per_person").html("You'll emit " + (totCo2*0.7).toPrecision(4) + "Kg of co2 on the Bus");
-                        console.log(totCo2);
-                        var e = document.getElementById("type_vehicle");
-                        var selected_vehicle = e.options[e.selectedIndex].value;
-                        var norm_distance = response.routes[0].legs[0].distance.text;
-                        norm_distance = norm_distance.substring(0, norm_distance.length - 3);
-                        //norm emisions = typical ttc co2 emmisions
-                        console.log(parseFloat(norm_distance) * selected_vehicle);
-                        $("#co2_by_car").html("and you'll save " + Math.abs(((parseFloat(norm_distance) * selected_vehicle) - (totCo2*0.7))).toPrecision(4) + " Kg of co2");
-                        //console.log(selected_vehicle);
-                        console.log(transit_data.data[b].emmisions_per_person);
-                        $("#panel").css("background-color", "white");
-                    }
-                });
-                //$("#startLoc").val("");
-                //$("#endLoc").val("");
-            });
-        });
-        var transit_data = {
-            "data": [
-                {
-                    "rank": 1
-                    , "route_short_name": 504
-                    , "route_name": "King"
-                    , "ridership": 64579
-                    , "route_id": 47664
-                    , "route_type": 0.03526
-                    , "shape_dist_traveled": 2.2598
-                    , "total_emmision": 5145.69010929
-                    , "emmisions_per_person": 0.079680548
-  }
-                , {
-                    "rank": 2
-                    , "route_short_name": 32
-                    , "route_name": "Eglinton West"
-                    , "ridership": 48684
-                    , "route_id": 47618
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 17.7263
-                    , "total_emmision": 75778.9050837
-                    , "emmisions_per_person": 1.556546403
-  }
-                , {
-                    "rank": 3
-                    , "route_short_name": 35
-                    , "route_name": "Jane"
-                    , "ridership": 45699
-                    , "route_id": 47634
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 14.4793
-                    , "total_emmision": 58102.9576908
-                    , "emmisions_per_person": 1.271427333
-  }
-                , {
-                    "rank": 4
-                    , "route_short_name": 36
-                    , "route_name": "Finch West"
-                    , "ridership": 43952
-                    , "route_id": 47638
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 11.0272
-                    , "total_emmision": 42558.6526833
-                    , "emmisions_per_person": 0.968298432
-  }
-                , {
-                    "rank": 5
-                    , "route_short_name": 510
-                    , "route_name": "Spadina"
-                    , "ridership": 43804
-                    , "route_id": 47670
-                    , "route_type": 0.03526
-                    , "shape_dist_traveled": 3.1271
-                    , "total_emmision": 4829.89676098
-                    , "emmisions_per_person": 0.110261546
-  }
-                , {
-                    "rank": 6
-                    , "route_short_name": 501
-                    , "route_name": "Queen"
-                    , "ridership": 43464
-                    , "route_id": 47661
-                    , "route_type": 0.03526
-                    , "shape_dist_traveled": 15.1971
-                    , "total_emmision": 23290.1733601
-                    , "emmisions_per_person": 0.535849746
-  }
-                , {
-                    "rank": 7
-                    , "route_short_name": 29
-                    , "route_name": "Dufferin"
-                    , "ridership": 39721
-                    , "route_id": 47604
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 9.5664
-                    , "total_emmision": 33366.6562221
-                    , "emmisions_per_person": 0.840025584
-  }
-                , {
-                    "rank": 8
-                    , "route_short_name": 506
-                    , "route_name": "Carlton"
-                    , "ridership": 39601
-                    , "route_id": 47666
-                    , "route_type": 0.03526
-                    , "shape_dist_traveled": 11.2503
-                    , "total_emmision": 15709.1455744
-                    , "emmisions_per_person": 0.396685578
-  }
-                , {
-                    "rank": 9
-                    , "route_short_name": 25
-                    , "route_name": "Don Mills"
-                    , "ridership": 39066
-                    , "route_id": 47601
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 16.7017
-                    , "total_emmision": 57293.2688373
-                    , "emmisions_per_person": 1.466576277
-  }
-                , {
-                    "rank": 10
-                    , "route_short_name": 512
-                    , "route_name": "St. Clair"
-                    , "ridership": 38113
-                    , "route_id": 47672
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 5.0164
-                    , "total_emmision": 16788.3985715
-                    , "emmisions_per_person": 0.440490084
-  }
-                , {
-                    "rank": 11
-                    , "route_short_name": 54
-                    , "route_name": "Lawrence East"
-                    , "ridership": 36277
-                    , "route_id": 47676
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 2.0725
-                    , "total_emmision": 6601.91428432
-                    , "emmisions_per_person": 0.181986225
-  }
-                , {
-                    "rank": 12
-                    , "route_short_name": 505
-                    , "route_name": "Dundas"
-                    , "ridership": 32410
-                    , "route_id": 47665
-                    , "route_type": 0.03526
-                    , "shape_dist_traveled": 1.8805
-                    , "total_emmision": 2148.9913963
-                    , "emmisions_per_person": 0.06630643
-  }
-                , {
-                    "rank": 13
-                    , "route_short_name": 60
-                    , "route_name": "Steeles West"
-                    , "ridership": 29819
-                    , "route_id": 47682
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 18.036
-                    , "total_emmision": 47225.57765
-                    , "emmisions_per_person": 1.58374116
-  }
-                , {
-                    "rank": 14
-                    , "route_short_name": 34
-                    , "route_name": "Eglinton East"
-                    , "ridership": 29501
-                    , "route_id": 47631
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 12.0439
-                    , "total_emmision": 31199.5159154
-                    , "emmisions_per_person": 1.057574859
-  }
-                , {
-                    "rank": 15
-                    , "route_short_name": 53
-                    , "route_name": "Steeles East"
-                    , "ridership": 28278
-                    , "route_id": 47675
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 17.8153
-                    , "total_emmision": 44237.0142991
-                    , "emmisions_per_person": 1.564361493
-  }
-                , {
-                    "rank": 16
-                    , "route_short_name": 95
-                    , "route_name": "York Mills"
-                    , "ridership": 27485
-                    , "route_id": 47719
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 21.4925
-                    , "total_emmision": 51871.2428411
-                    , "emmisions_per_person": 1.887256425
-  }
-                , {
-                    "rank": 17
-                    , "route_short_name": 85
-                    , "route_name": "Sheppard East"
-                    , "ridership": 27146
-                    , "route_id": 47709
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 25.7197
-                    , "total_emmision": 61307.7983801
-                    , "emmisions_per_person": 2.258446857
-  }
-                , {
-                    "rank": 18
-                    , "route_short_name": 102
-                    , "route_name": "Markham Rd."
-                    , "ridership": 25137
-                    , "route_id": 48382
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 17.3971
-                    , "total_emmision": 38400.2703661
-                    , "emmisions_per_person": 1.527639351
-  }
-                , {
-                    "rank": 19
-                    , "route_short_name": 24
-                    , "route_name": "Victoria Park"
-                    , "ridership": 24731
-                    , "route_id": 47600
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 14.7956
-                    , "total_emmision": 32130.5556599
-                    , "emmisions_per_person": 1.299201636
-  }
-                , {
-                    "rank": 20
-                    , "route_short_name": 96
-                    , "route_name": "Wilson"
-                    , "ridership": 24700
-                    , "route_id": 47720
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 21.1946
-                    , "total_emmision": 45969.1163022
-                    , "emmisions_per_person": 1.861097826
-  }
-                , {
-                    "rank": 21
-                    , "route_short_name": 41
-                    , "route_name": "Keele"
-                    , "ridership": 24597
-                    , "route_id": 47650
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 15.7122
-                    , "total_emmision": 33936.1926724
-                    , "emmisions_per_person": 1.379688282
-  }
-                , {
-                    "rank": 22
-                    , "route_short_name": 165
-                    , "route_name": "Weston Rd. North"
-                    , "ridership": 24314
-                    , "route_id": 47575
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 27.7536
-                    , "total_emmision": 59254.2784794
-                    , "emmisions_per_person": 2.437043616
-  }
-                , {
-                    "rank": 23
-                    , "route_short_name": 7
-                    , "route_name": "Bathurst"
-                    , "ridership": 24262
-                    , "route_id": 47692
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 14.8822
-                    , "total_emmision": 31705.7267353
-                    , "emmisions_per_person": 1.306805982
-  }
-                , {
-                    "rank": 24
-                    , "route_short_name": 39
-                    , "route_name": "Finch East"
-                    , "ridership": 23745
-                    , "route_id": 47645
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 1.0254
-                    , "total_emmision": 2138.00868063
-                    , "emmisions_per_person": 0.090040374
-  }
-                , {
-                    "rank": 25
-                    , "route_short_name": 52
-                    , "route_name": "Lawrence West"
-                    , "ridership": 23036
-                    , "route_id": 47674
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 15.1795
-                    , "total_emmision": 30704.9584132
-                    , "emmisions_per_person": 1.332911895
-  }
-                , {
-                    "rank": 26
-                    , "route_short_name": 63
-                    , "route_name": "Ossington"
-                    , "ridership": 22694
-                    , "route_id": 47685
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 1.1326
-                    , "total_emmision": 2257.00013456
-                    , "emmisions_per_person": 0.099453606
-  }
-                , {
-                    "rank": 27
-                    , "route_short_name": 116
-                    , "route_name": "Morningside"
-                    , "ridership": 22285
-                    , "route_id": 47544
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 1.3829
-                    , "total_emmision": 2706.12212597
-                    , "emmisions_per_person": 0.121432449
-  }
-                , {
-                    "rank": 28
-                    , "route_short_name": 196
-                    , "route_name": "York University Rocket"
-                    , "ridership": 21892
-                    , "route_id": 47590
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 12.4456
-                    , "total_emmision": 23924.6313933
-                    , "emmisions_per_person": 1.092848136
-  }
-                , {
-                    "rank": 29
-                    , "route_short_name": 84
-                    , "route_name": "Sheppard West"
-                    , "ridership": 19143
-                    , "route_id": 47708
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 12.887
-                    , "total_emmision": 21662.3617982
-                    , "emmisions_per_person": 1.13160747
-  }
-                , {
-                    "rank": 30
-                    , "route_short_name": 199
-                    , "route_name": "Finch Rocket"
-                    , "ridership": 19055
-                    , "route_id": 47592
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 26.019
-                    , "total_emmision": 43535.4994715
-                    , "emmisions_per_person": 2.28472839
-  }
-                , {
-                    "rank": 31
-                    , "route_short_name": 45
-                    , "route_name": "Kipling"
-                    , "ridership": 18682
-                    , "route_id": 47654
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 14.8059
-                    , "total_emmision": 24288.5817679
-                    , "emmisions_per_person": 1.300106079
-  }
-                , {
-                    "rank": 33
-                    , "route_short_name": 68
-                    , "route_name": "Warden"
-                    , "ridership": 17887
-                    , "route_id": 47690
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 12.9745
-                    , "total_emmision": 20378.4953445
-                    , "emmisions_per_person": 1.139290845
-  }
-                , {
-                    "rank": 34
-                    , "route_short_name": 511
-                    , "route_name": "Bathurst"
-                    , "ridership": 17394
-                    , "route_id": 47671
-                    , "route_type": 0.03526
-                    , "shape_dist_traveled": 1.413
-                    , "total_emmision": 866.61047772
-                    , "emmisions_per_person": 0.04982238
-  }
-                , {
-                    "rank": 35
-                    , "route_short_name": 37
-                    , "route_name": "Islington"
-                    , "ridership": 17087
-                    , "route_id": 47641
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 14.5313
-                    , "total_emmision": 21802.9001314
-                    , "emmisions_per_person": 1.275993453
-  }
-                , {
-                    "rank": 36
-                    , "route_short_name": 86
-                    , "route_name": "Scarborough"
-                    , "ridership": 16381
-                    , "route_id": 47710
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 14.0009
-                    , "total_emmision": 20139.113114
-                    , "emmisions_per_person": 1.229419029
-  }
-                , {
-                    "rank": 37
-                    , "route_short_name": 100
-                    , "route_name": "Flemingdon Park"
-                    , "ridership": 15807
-                    , "route_id": 47528
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 10.2405
-                    , "total_emmision": 14213.9437471
-                    , "emmisions_per_person": 0.899218305
-  }
-                , {
-                    "rank": 38
-                    , "route_short_name": 43
-                    , "route_name": "Kennedy"
-                    , "ridership": 15494
-                    , "route_id": 47652
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 12.2186
-                    , "total_emmision": 16623.7491314
-                    , "emmisions_per_person": 1.072915266
-  }
-                , {
-                    "rank": 39
-                    , "route_short_name": 47
-                    , "route_name": "Lansdowne"
-                    , "ridership": 15354
-                    , "route_id": 47656
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 4.3324
-                    , "total_emmision": 5841.09218758
-                    , "emmisions_per_person": 0.380428044
-  }
-                , {
-                    "rank": 40
-                    , "route_short_name": 129
-                    , "route_name": "McCowan North"
-                    , "ridership": 15222
-                    , "route_id": 47557
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 7.431
-                    , "total_emmision": 9932.60022642
-                    , "emmisions_per_person": 0.65251611
-  }
-                , {
-                    "rank": 41
-                    , "route_short_name": 89
-                    , "route_name": "Weston"
-                    , "ridership": 15148
-                    , "route_id": 47713
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 10.0348
-                    , "total_emmision": 13347.7478766
-                    , "emmisions_per_person": 0.881155788
-  }
-                , {
-                    "rank": 42
-                    , "route_short_name": 191
-                    , "route_name": "Hwy. 27 Rocket"
-                    , "ridership": 12838
-                    , "route_id": 47586
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 21.974
-                    , "total_emmision": 24771.3952357
-                    , "emmisions_per_person": 1.92953694
-  }
-                , {
-                    "rank": 43
-                    , "route_short_name": 17
-                    , "route_name": "Birchmount"
-                    , "ridership": 12407
-                    , "route_id": 47579
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 13.7967
-                    , "total_emmision": 15030.9344324
-                    , "emmisions_per_person": 1.211488227
-  }
-                , {
-                    "rank": 44
-                    , "route_short_name": 57
-                    , "route_name": "Midland"
-                    , "ridership": 11614
-                    , "route_id": 47679
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 11.8784
-                    , "total_emmision": 12113.8933187
-                    , "emmisions_per_person": 1.043042304
-  }
-                , {
-                    "rank": 45
-                    , "route_short_name": 509
-                    , "route_name": "Harbourfront"
-                    , "ridership": 11572
-                    , "route_id": 47668
-                    , "route_type": 0.03526
-                    , "shape_dist_traveled": 1.7378
-                    , "total_emmision": 709.072309616
-                    , "emmisions_per_person": 0.061274828
-  }
-                , {
-                    "rank": 46
-                    , "route_short_name": 16
-                    , "route_name": "McCowan"
-                    , "ridership": 11279
-                    , "route_id": 47571
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 9.4125
-                    , "total_emmision": 9322.22461837
-                    , "emmisions_per_person": 0.826511625
-  }
-                , {
-                    "rank": 47
-                    , "route_short_name": 38
-                    , "route_name": "Highland Creek"
-                    , "ridership": 10262
-                    , "route_id": 47642
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 12.4365
-                    , "total_emmision": 11206.607505
-                    , "emmisions_per_person": 1.092049065
-  }
-                , {
-                    "rank": 48
-                    , "route_short_name": 76
-                    , "route_name": "Royal York South"
-                    , "ridership": 10063
-                    , "route_id": 47699
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 3.2992
-                    , "total_emmision": 2915.27879338
-                    , "emmisions_per_person": 0.289702752
-  }
-                , {
-                    "rank": 49
-                    , "route_short_name": 190
-                    , "route_name": "Scarborough Rocket"
-                    , "ridership": 10061
-                    , "route_id": 47585
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 8.853
-                    , "total_emmision": 7821.23959773
-                    , "emmisions_per_person": 0.77738193
-  }
-                , {
-                    "rank": 50
-                    , "route_short_name": 133
-                    , "route_name": "Neilson"
-                    , "ridership": 9950
-                    , "route_id": 47561
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 14.437
-                    , "total_emmision": 12613.7440515
-                    , "emmisions_per_person": 1.26771297
-  }
-                , {
-                    "rank": 51
-                    , "route_short_name": 134
-                    , "route_name": "Progress"
-                    , "ridership": 9735
-                    , "route_id": 48646
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 7.9375
-                    , "total_emmision": 6785.21590312
-                    , "emmisions_per_person": 0.696991875
-  }
-                , {
-                    "rank": 52
-                    , "route_short_name": 73
-                    , "route_name": "Royal York"
-                    , "ridership": 9598
-                    , "route_id": 47696
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 17.2423
-                    , "total_emmision": 14531.8169921
-                    , "emmisions_per_person": 1.514046363
-  }
-                , {
-                    "rank": 53
-                    , "route_short_name": 12
-                    , "route_name": "Kingston Rd."
-                    , "ridership": 9571
-                    , "route_id": 47548
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 0.7956
-                    , "total_emmision": 668.645718156
-                    , "emmisions_per_person": 0.069861636
-  }
-                , {
-                    "rank": 54
-                    , "route_short_name": 21
-                    , "route_name": "Brimley"
-                    , "ridership": 9542
-                    , "route_id": 47596
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 6.9212
-                    , "total_emmision": 5799.15595802
-                    , "emmisions_per_person": 0.607750572
-  }
-                , {
-                    "rank": 55
-                    , "route_short_name": 44
-                    , "route_name": "Kipling South"
-                    , "ridership": 9387
-                    , "route_id": 47653
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 5.8515
-                    , "total_emmision": 4823.2303582
-                    , "emmisions_per_person": 0.513820215
-  }
-                , {
-                    "rank": 56
-                    , "route_short_name": 11
-                    , "route_name": "Bayview"
-                    , "ridership": 9317
-                    , "route_id": 47538
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 4.7315
-                    , "total_emmision": 3870.96208075
-                    , "emmisions_per_person": 0.415473015
-  }
-                , {
-                    "rank": 57
-                    , "route_short_name": 94
-                    , "route_name": "Wellesley"
-                    , "ridership": 8983
-                    , "route_id": 47718
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 6.3696
-                    , "total_emmision": 5024.32283621
-                    , "emmisions_per_person": 0.559314576
-  }
-                , {
-                    "rank": 58
-                    , "route_short_name": 110
-                    , "route_name": "Islington South"
-                    , "ridership": 8972
-                    , "route_id": 47539
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 2.0434
-                    , "total_emmision": 1609.85451929
-                    , "emmisions_per_person": 0.179430954
-  }
-                , {
-                    "rank": 59
-                    , "route_short_name": 42
-                    , "route_name": "Cummer"
-                    , "ridership": 8610
-                    , "route_id": 47651
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 11.5839
-                    , "total_emmision": 8757.93924999
-                    , "emmisions_per_person": 1.017182259
-  }
-                , {
-                    "rank": 60
-                    , "route_short_name": 70
-                    , "route_name": "O'Connor"
-                    , "ridership": 8605
-                    , "route_id": 47693
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 6.2538
-                    , "total_emmision": 4725.40286169
-                    , "emmisions_per_person": 0.549146178
-  }
-                , {
-                    "rank": 61
-                    , "route_short_name": 79
-                    , "route_name": "Scarlett Rd."
-                    , "ridership": 8362
-                    , "route_id": 47702
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 9.034
-                    , "total_emmision": 6633.37006548
-                    , "emmisions_per_person": 0.79327554
-  }
-                , {
-                    "rank": 62
-                    , "route_short_name": 168
-                    , "route_name": "Symington"
-                    , "ridership": 8285
-                    , "route_id": 47577
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 5.0072
-                    , "total_emmision": 3642.76729212
-                    , "emmisions_per_person": 0.439682232
-  }
-                , {
-                    "rank": 63
-                    , "route_short_name": 87
-                    , "route_name": "Cosburn"
-                    , "ridership": 8191
-                    , "route_id": 47711
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 7.366
-                    , "total_emmision": 5298.00809586
-                    , "emmisions_per_person": 0.64680846
-  }
-                , {
-                    "rank": 64
-                    , "route_short_name": 6
-                    , "route_name": "Bay"
-                    , "ridership": 7944
-                    , "route_id": 47681
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 5.9953
-                    , "total_emmision": 4182.09729559
-                    , "emmisions_per_person": 0.526447293
-  }
-                , {
-                    "rank": 65
-                    , "route_short_name": 112
-                    , "route_name": "West Mall"
-                    , "ridership": 7922
-                    , "route_id": 47541
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 9.8932
-                    , "total_emmision": 6882.01482842
-                    , "emmisions_per_person": 0.868721892
-  }
-                , {
-                    "rank": 66
-                    , "route_short_name": 106
-                    , "route_name": "York University"
-                    , "ridership": 7687
-                    , "route_id": 47534
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 8.1223
-                    , "total_emmision": 5482.51570598
-                    , "emmisions_per_person": 0.713219163
-  }
-                , {
-                    "rank": 67
-                    , "route_short_name": 75
-                    , "route_name": "Sherbourne"
-                    , "ridership": 7468
-                    , "route_id": 47698
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 4.2437
-                    , "total_emmision": 2782.87027
-                    , "emmisions_per_person": 0.372639297
-  }
-                , {
-                    "rank": 68
-                    , "route_short_name": 22
-                    , "route_name": "Coxwell"
-                    , "ridership": 7092
-                    , "route_id": 47597
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 3.2925
-                    , "total_emmision": 2050.3995021
-                    , "emmisions_per_person": 0.289114425
-  }
-                , {
-                    "rank": 69
-                    , "route_short_name": 46
-                    , "route_name": "Martin Grove"
-                    , "ridership": 6927
-                    , "route_id": 47655
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 16.2604
-                    , "total_emmision": 9890.54879015
-                    , "emmisions_per_person": 1.427825724
-  }
-                , {
-                    "rank": 70
-                    , "route_short_name": 108
-                    , "route_name": "Downsview"
-                    , "ridership": 6841
-                    , "route_id": 47536
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 11.7056
-                    , "total_emmision": 7031.65002298
-                    , "emmisions_per_person": 1.027868736
-  }
-                , {
-                    "rank": 71
-                    , "route_short_name": 72
-                    , "route_name": "Pape"
-                    , "ridership": 6839
-                    , "route_id": 47695
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 8.3975
-                    , "total_emmision": 5042.97242453
-                    , "emmisions_per_person": 0.737384475
-  }
-                , {
-                    "rank": 72
-                    , "route_short_name": 161
-                    , "route_name": "Rogers Rd."
-                    , "ridership": 6606
-                    , "route_id": 47573
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 9.7118
-                    , "total_emmision": 5633.55160175
-                    , "emmisions_per_person": 0.852793158
-  }
-                , {
-                    "rank": 73
-                    , "route_short_name": 123
-                    , "route_name": "Shorncliffe"
-                    , "ridership": 6448
-                    , "route_id": 47552
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 3.1504
-                    , "total_emmision": 1783.75295155
-                    , "emmisions_per_person": 0.276636624
-  }
-                , {
-                    "rank": 74
-                    , "route_short_name": 90
-                    , "route_name": "Vaughan"
-                    , "ridership": 6417
-                    , "route_id": 47715
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 2.599
-                    , "total_emmision": 1464.47612523
-                    , "emmisions_per_person": 0.22821819
-  }
-                , {
-                    "rank": 75
-                    , "route_short_name": 64
-                    , "route_name": "Main"
-                    , "ridership": 6409
-                    , "route_id": 47686
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 2.2775
-                    , "total_emmision": 1281.71844547
-                    , "emmisions_per_person": 0.199987275
-  }
-                , {
-                    "rank": 76
-                    , "route_short_name": 111
-                    , "route_name": "East Mall"
-                    , "ridership": 6376
-                    , "route_id": 47540
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 8.4289
-                    , "total_emmision": 4719.14353658
-                    , "emmisions_per_person": 0.740141709
-  }
-                , {
-                    "rank": 77
-                    , "route_short_name": 131
-                    , "route_name": "Nugget"
-                    , "ridership": 6270
-                    , "route_id": 47559
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 10.0684
-                    , "total_emmision": 5543.34589908
-                    , "emmisions_per_person": 0.884106204
-  }
-                , {
-                    "rank": 78
-                    , "route_short_name": 23
-                    , "route_name": "Dawes"
-                    , "ridership": 6193
-                    , "route_id": 47599
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 3.993
-                    , "total_emmision": 2171.42266869
-                    , "emmisions_per_person": 0.35062533
-  }
-                , {
-                    "rank": 79
-                    , "route_short_name": 20
-                    , "route_name": "Cliffside"
-                    , "ridership": 6112
-                    , "route_id": 47595
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 10.1334
-                    , "total_emmision": 5438.54227565
-                    , "emmisions_per_person": 0.889813854
-  }
-                , {
-                    "rank": 80
-                    , "route_short_name": 81
-                    , "route_name": "Thorncliffe Park"
-                    , "ridership": 6039
-                    , "route_id": 47705
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 4.087
-                    , "total_emmision": 2167.27311933
-                    , "emmisions_per_person": 0.35887947
-  }
-                , {
-                    "rank": 81
-                    , "route_short_name": 91
-                    , "route_name": "Woodbine"
-                    , "ridership": 5589
-                    , "route_id": 47716
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 11.7239
-                    , "total_emmision": 5753.73945815
-                    , "emmisions_per_person": 1.029475659
-  }
-                , {
-                    "rank": 82
-                    , "route_short_name": 69
-                    , "route_name": "Warden South"
-                    , "ridership": 5494
-                    , "route_id": 47691
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 1.612
-                    , "total_emmision": 777.67416168
-                    , "emmisions_per_person": 0.14154972
-  }
-                , {
-                    "rank": 83
-                    , "route_short_name": 67
-                    , "route_name": "Pharmacy"
-                    , "ridership": 5318
-                    , "route_id": 47689
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 4.575
-                    , "total_emmision": 2136.4041285
-                    , "emmisions_per_person": 0.40173075
-  }
-                , {
-                    "rank": 84
-                    , "route_short_name": 109
-                    , "route_name": "Ranee"
-                    , "ridership": 5270
-                    , "route_id": 47537
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 2.3989
-                    , "total_emmision": 1110.11184543
-                    , "emmisions_per_person": 0.210647409
-  }
-                , {
-                    "rank": 85
-                    , "route_short_name": 88
-                    , "route_name": "South Leaside"
-                    , "ridership": 5008
-                    , "route_id": 47712
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 1.8519
-                    , "total_emmision": 814.377617712
-                    , "emmisions_per_person": 0.162615339
-  }
-                , {
-                    "rank": 86
-                    , "route_short_name": 40
-                    , "route_name": "Junction"
-                    , "ridership": 4809
-                    , "route_id": 47649
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 3.1736
-                    , "total_emmision": 1340.14238114
-                    , "emmisions_per_person": 0.278673816
-  }
-                , {
-                    "rank": 87
-                    , "route_short_name": 113
-                    , "route_name": "Danforth Rd."
-                    , "ridership": 4795
-                    , "route_id": 47542
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 7.5566
-                    , "total_emmision": 3181.69849557
-                    , "emmisions_per_person": 0.663545046
-  }
-                , {
-                    "rank": 88
-                    , "route_short_name": 105
-                    , "route_name": "Dufferin North"
-                    , "ridership": 4781
-                    , "route_id": 47533
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 13.6043
-                    , "total_emmision": 5711.35192032
-                    , "emmisions_per_person": 1.194593583
-  }
-                , {
-                    "rank": 89
-                    , "route_short_name": 66
-                    , "route_name": "Prince Edward"
-                    , "ridership": 4704
-                    , "route_id": 47688
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 6.7058
-                    , "total_emmision": 2769.88594579
-                    , "emmisions_per_person": 0.588836298
-  }
-                , {
-                    "rank": 90
-                    , "route_short_name": 192
-                    , "route_name": "Airport Rocket"
-                    , "ridership": 4644
-                    , "route_id": 47587
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 12.2449
-                    , "total_emmision": 4993.34336284
-                    , "emmisions_per_person": 1.075224669
-  }
-                , {
-                    "rank": 91
-                    , "route_short_name": 97
-                    , "route_name": "Yonge"
-                    , "ridership": 4175
-                    , "route_id": 47721
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 9.0956
-                    , "total_emmision": 3334.5083553
-                    , "emmisions_per_person": 0.798684636
-  }
-                , {
-                    "rank": 92
-                    , "route_short_name": 51
-                    , "route_name": "Leslie"
-                    , "ridership": 4117
-                    , "route_id": 47669
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 17.5305
-                    , "total_emmision": 6337.51714499
-                    , "emmisions_per_person": 1.539353205
-  }
-                , {
-                    "rank": 93
-                    , "route_short_name": 107
-                    , "route_name": "Keele North"
-                    , "ridership": 4111
-                    , "route_id": 47535
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 20.9221
-                    , "total_emmision": 7552.60422971
-                    , "emmisions_per_person": 1.837169601
-  }
-                , {
-                    "rank": 94
-                    , "route_short_name": 9
-                    , "route_name": "Bellamy"
-                    , "ridership": 4081
-                    , "route_id": 47714
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 13.2422
-                    , "total_emmision": 4745.37693214
-                    , "emmisions_per_person": 1.162797582
-  }
-                , {
-                    "rank": 95
-                    , "route_short_name": 65
-                    , "route_name": "Parliament"
-                    , "ridership": 3961
-                    , "route_id": 47687
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 2.8839
-                    , "total_emmision": 1003.0648609
-                    , "emmisions_per_person": 0.253235259
-  }
-                , {
-                    "rank": 96
-                    , "route_short_name": 122
-                    , "route_name": "Graydon Hall"
-                    , "ridership": 3887
-                    , "route_id": 47551
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 0.5896
-                    , "total_emmision": 201.240780312
-                    , "emmisions_per_person": 0.051772776
-  }
-                , {
-                    "rank": 97
-                    , "route_short_name": 502
-                    , "route_name": "Downtowner"
-                    , "ridership": 3812
-                    , "route_id": 47662
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 3.1447
-                    , "total_emmision": 1052.63083988
-                    , "emmisions_per_person": 0.276136107
-  }
-                , {
-                    "rank": 98
-                    , "route_short_name": 56
-                    , "route_name": "Leaside"
-                    , "ridership": 3758
-                    , "route_id": 47678
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 5.1757
-                    , "total_emmision": 1707.92913949
-                    , "emmisions_per_person": 0.454478217
-  }
-                , {
-                    "rank": 99
-                    , "route_short_name": 124
-                    , "route_name": "Sunnybrook"
-                    , "ridership": 3692
-                    , "route_id": 47553
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 2.935
-                    , "total_emmision": 951.5109162
-                    , "emmisions_per_person": 0.25772235
-  }
-                , {
-                    "rank": 100
-                    , "route_short_name": 26
-                    , "route_name": "Dupont"
-                    , "ridership": 3608
-                    , "route_id": 47602
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 9.7113
-                    , "total_emmision": 3076.71930482
-                    , "emmisions_per_person": 0.852749253
-  }
-                , {
-                    "rank": 101
-                    , "route_short_name": 61
-                    , "route_name": "Avenue Rd. North"
-                    , "ridership": 3603
-                    , "route_id": 47683
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 5.9346
-                    , "total_emmision": 1877.58536528
-                    , "emmisions_per_person": 0.521117226
-  }
-                , {
-                    "rank": 102
-                    , "route_short_name": 71
-                    , "route_name": "Runnymede"
-                    , "ridership": 3568
-                    , "route_id": 47694
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 8.1093
-                    , "total_emmision": 2540.69299454
-                    , "emmisions_per_person": 0.712077633
-  }
-                , {
-                    "rank": 103
-                    , "route_short_name": 160
-                    , "route_name": "Bathurst North"
-                    , "ridership": 3504
-                    , "route_id": 47572
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 9.4053
-                    , "total_emmision": 2893.88139307
-                    , "emmisions_per_person": 0.825879393
-  }
-                , {
-                    "rank": 104
-                    , "route_short_name": 104
-                    , "route_name": "Faywood"
-                    , "ridership": 3326
-                    , "route_id": 47532
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 8.1913
-                    , "total_emmision": 2392.31880428
-                    , "emmisions_per_person": 0.719278053
-  }
-                , {
-                    "rank": 105
-                    , "route_short_name": 31
-                    , "route_name": "Greenwood"
-                    , "ridership": 3311
-                    , "route_id": 47614
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 3.4664
-                    , "total_emmision": 1007.81735762
-                    , "emmisions_per_person": 0.304384584
-  }
-                , {
-                    "rank": 106
-                    , "route_short_name": 92
-                    , "route_name": "Woodbine South"
-                    , "ridership": 3159
-                    , "route_id": 47717
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 3.1075
-                    , "total_emmision": 861.994987425
-                    , "emmisions_per_person": 0.272869575
-  }
-                , {
-                    "rank": 107
-                    , "route_short_name": 49
-                    , "route_name": "Bloor West"
-                    , "ridership": 3124
-                    , "route_id": 47658
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 5.28
-                    , "total_emmision": 1448.4013632
-                    , "emmisions_per_person": 0.4636368
-  }
-                , {
-                    "rank": 108
-                    , "route_short_name": 50
-                    , "route_name": "Burnhamthorpe"
-                    , "ridership": 3111
-                    , "route_id": 47660
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 5.7504
-                    , "total_emmision": 1570.87650326
-                    , "emmisions_per_person": 0.504942624
-  }
-                , {
-                    "rank": 109
-                    , "route_short_name": 125
-                    , "route_name": "Drewry"
-                    , "ridership": 2897
-                    , "route_id": 47554
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 4.0332
-                    , "total_emmision": 1025.98788092
-                    , "emmisions_per_person": 0.354155292
-  }
-                , {
-                    "rank": 110
-                    , "route_short_name": 62
-                    , "route_name": "Mortimer"
-                    , "ridership": 2860
-                    , "route_id": 47684
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 2.7419
-                    , "total_emmision": 688.59144354
-                    , "emmisions_per_person": 0.240766239
-  }
-                , {
-                    "rank": 111
-                    , "route_short_name": 132
-                    , "route_name": "Milner"
-                    , "ridership": 2810
-                    , "route_id": 47560
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 9.0253
-                    , "total_emmision": 2226.95757633
-                    , "emmisions_per_person": 0.792511593
-  }
-                , {
-                    "rank": 112
-                    , "route_short_name": 117
-                    , "route_name": "Alness"
-                    , "ridership": 2771
-                    , "route_id": 47545
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 8.1265
-                    , "total_emmision": 1977.35225101
-                    , "emmisions_per_person": 0.713587965
-  }
-                , {
-                    "rank": 113
-                    , "route_short_name": 59
-                    , "route_name": "Maple Leaf"
-                    , "ridership": 2739
-                    , "route_id": 47680
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 10.7136
-                    , "total_emmision": 2576.74497062
-                    , "emmisions_per_person": 0.940761216
-  }
-                , {
-                    "rank": 114
-                    , "route_short_name": 15
-                    , "route_name": "Evans"
-                    , "ridership": 2724
-                    , "route_id": 47570
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 8.4489
-                    , "total_emmision": 2020.92990412
-                    , "emmisions_per_person": 0.741897909
-  }
-                , {
-                    "rank": 115
-                    , "route_short_name": 98
-                    , "route_name": "Willowdale-Senlac"
-                    , "ridership": 2644
-                    , "route_id": 47722
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 5.6233
-                    , "total_emmision": 1305.55953661
-                    , "emmisions_per_person": 0.493781973
-  }
-                , {
-                    "rank": 116
-                    , "route_short_name": 126
-                    , "route_name": "Christie"
-                    , "ridership": 2607
-                    , "route_id": 47555
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 3.3033
-                    , "total_emmision": 756.193649211
-                    , "emmisions_per_person": 0.290062773
-  }
-                , {
-                    "rank": 117
-                    , "route_short_name": 77
-                    , "route_name": "Swansea"
-                    , "ridership": 2554
-                    , "route_id": 47700
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 3.6997
-                    , "total_emmision": 829.719657978
-                    , "emmisions_per_person": 0.324870657
-  }
-                , {
-                    "rank": 118
-                    , "route_short_name": 30
-                    , "route_name": "Lambton"
-                    , "ridership": 2516
-                    , "route_id": 47607
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 9.6195
-                    , "total_emmision": 2125.23575022
-                    , "emmisions_per_person": 0.844688295
-  }
-                , {
-                    "rank": 119
-                    , "route_short_name": 14
-                    , "route_name": "Glencairn"
-                    , "ridership": 2491
-                    , "route_id": 47564
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 6.7072
-                    , "total_emmision": 1467.09744691
-                    , "emmisions_per_person": 0.588959232
-  }
-                , {
-                    "rank": 120
-                    , "route_short_name": 48
-                    , "route_name": "Rathburn"
-                    , "ridership": 2477
-                    , "route_id": 47657
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 8.7226
-                    , "total_emmision": 1897.21234036
-                    , "emmisions_per_person": 0.765931506
-  }
-                , {
-                    "rank": 121
-                    , "route_short_name": 135
-                    , "route_name": "Gerrard"
-                    , "ridership": 2358
-                    , "route_id": 47563
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 5.7007
-                    , "total_emmision": 1180.36402519
-                    , "emmisions_per_person": 0.500578467
-  }
-                , {
-                    "rank": 122
-                    , "route_short_name": 83
-                    , "route_name": "Jones"
-                    , "ridership": 2283
-                    , "route_id": 47707
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 4.2715
-                    , "total_emmision": 856.308587445
-                    , "emmisions_per_person": 0.375080415
-  }
-                , {
-                    "rank": 123
-                    , "route_short_name": 80
-                    , "route_name": "Queensway"
-                    , "ridership": 2224
-                    , "route_id": 47704
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 8.7394
-                    , "total_emmision": 1706.71253194
-                    , "emmisions_per_person": 0.767406714
-  }
-                , {
-                    "rank": 124
-                    , "route_short_name": 503
-                    , "route_name": "Kingston Rd."
-                    , "ridership": 2214
-                    , "route_id": 47663
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 3.133
-                    , "total_emmision": 609.09072822
-                    , "emmisions_per_person": 0.27510873
-  }
-                , {
-                    "rank": 126
-                    , "route_short_name": 5
-                    , "route_name": "Avenue Rd."
-                    , "ridership": 2057
-                    , "route_id": 47659
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 5.9796
-                    , "total_emmision": 1080.06626653
-                    , "emmisions_per_person": 0.525068676
-  }
-                , {
-                    "rank": 127
-                    , "route_short_name": 130
-                    , "route_name": "Middlefield"
-                    , "ridership": 1944
-                    , "route_id": 47558
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 7.8729
-                    , "total_emmision": 1343.92481446
-                    , "emmisions_per_person": 0.691319349
-  }
-                , {
-                    "rank": 129
-                    , "route_short_name": 78
-                    , "route_name": "St. Andrews"
-                    , "ridership": 1791
-                    , "route_id": 47701
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 4.7076
-                    , "total_emmision": 740.353471596
-                    , "emmisions_per_person": 0.413374356
-  }
-                , {
-                    "rank": 130
-                    , "route_short_name": 127
-                    , "route_name": "Davenport"
-                    , "ridership": 1649
-                    , "route_id": 47556
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 6.0301
-                    , "total_emmision": 873.150580569
-                    , "emmisions_per_person": 0.529503081
-  }
-                , {
-                    "rank": 131
-                    , "route_short_name": 300
-                    , "route_name": "Bloor-Danforth N.B."
-                    , "ridership": 1577
-                    , "route_id": 47608
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 33.1258
-                    , "total_emmision": 4587.14053735
-                    , "emmisions_per_person": 2.908776498
-  }
-                , {
-                    "rank": 132
-                    , "route_short_name": 169
-                    , "route_name": "Huntingwood"
-                    , "ridership": 1514
-                    , "route_id": 47578
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 12.0345
-                    , "total_emmision": 1599.91865973
-                    , "emmisions_per_person": 1.056749445
-  }
-                , {
-                    "rank": 134
-                    , "route_short_name": 82
-                    , "route_name": "Rosedale"
-                    , "ridership": 1401
-                    , "route_id": 47706
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 2.5126
-                    , "total_emmision": 309.104599806
-                    , "emmisions_per_person": 0.220631406
-  }
-                , {
-                    "rank": 135
-                    , "route_short_name": 320
-                    , "route_name": "Yonge N.B."
-                    , "ridership": 1285
-                    , "route_id": 47619
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 18.5802
-                    , "total_emmision": 2096.51266017
-                    , "emmisions_per_person": 1.631527362
-  }
-                , {
-                    "rank": 136
-                    , "route_short_name": 10
-                    , "route_name": "Van Horne"
-                    , "ridership": 1212
-                    , "route_id": 47527
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 1.3001
-                    , "total_emmision": 138.364078572
-                    , "emmisions_per_person": 0.114161781
-  }
-                , {
-                    "rank": 137
-                    , "route_short_name": 55
-                    , "route_name": "Warren Park"
-                    , "ridership": 1150
-                    , "route_id": 47677
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 3.9008
-                    , "total_emmision": 393.9086352
-                    , "emmisions_per_person": 0.342529248
-  }
-                , {
-                    "rank": 138
-                    , "route_short_name": 74
-                    , "route_name": "Mt. Pleasant"
-                    , "ridership": 1137
-                    , "route_id": 47697
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 6.1919
-                    , "total_emmision": 618.199110243
-                    , "emmisions_per_person": 0.543710739
-  }
-                , {
-                    "rank": 139
-                    , "route_short_name": 120
-                    , "route_name": "Calvington"
-                    , "ridership": 1135
-                    , "route_id": 47549
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 9.4696
-                    , "total_emmision": 943.78152876
-                    , "emmisions_per_person": 0.831525576
-  }
-                , {
-                    "rank": 140
-                    , "route_short_name": 115
-                    , "route_name": "Silver Hills"
-                    , "ridership": 1116
-                    , "route_id": 47543
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 6.0085
-                    , "total_emmision": 588.80872566
-                    , "emmisions_per_person": 0.527606385
-  }
-                , {
-                    "rank": 141
-                    , "route_short_name": 167
-                    , "route_name": "Pharmacy North"
-                    , "ridership": 1115
-                    , "route_id": 47576
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 7.6431
-                    , "total_emmision": 748.321781265
-                    , "emmisions_per_person": 0.671140611
-  }
-                , {
-                    "rank": 142
-                    , "route_short_name": 28
-                    , "route_name": "Davisville"
-                    , "ridership": 1043
-                    , "route_id": 47603
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 4.9289
-                    , "total_emmision": 451.417397487
-                    , "emmisions_per_person": 0.432806709
-  }
-                , {
-                    "rank": 143
-                    , "route_short_name": 8
-                    , "route_name": "Broadview"
-                    , "ridership": 920
-                    , "route_id": 47703
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 4.283
-                    , "total_emmision": 346.0030116
-                    , "emmisions_per_person": 0.37609023
-  }
-                , {
-                    "rank": 145
-                    , "route_short_name": 162
-                    , "route_name": "Lawrence-Donway"
-                    , "ridership": 672
-                    , "route_id": 47574
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 1.1226
-                    , "total_emmision": 66.242740032
-                    , "emmisions_per_person": 0.098575506
-  }
-                , {
-                    "rank": 146
-                    , "route_short_name": 33
-                    , "route_name": "Forest Hill"
-                    , "ridership": 615
-                    , "route_id": 47624
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 3.4697
-                    , "total_emmision": 187.374729555
-                    , "emmisions_per_person": 0.304674357
-  }
-                , {
-                    "rank": 147
-                    , "route_short_name": 144
-                    , "route_name": "Downtown/Don Valley Expr."
-                    , "ridership": 607
-                    , "route_id": 47568
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 15.2832
-                    , "total_emmision": 814.604799744
-                    , "emmisions_per_person": 1.342017792
-  }
-                , {
-                    "rank": 148
-                    , "route_short_name": 301
-                    , "route_name": "Queen N.C."
-                    , "ridership": 572
-                    , "route_id": 47609
-                    , "route_type": 0.03526
-                    , "shape_dist_traveled": 25.9067
-                    , "total_emmision": 522.504978424
-                    , "emmisions_per_person": 0.913470242
-  }
-                , {
-                    "rank": 149
-                    , "route_short_name": 306
-                    , "route_name": "Carlton N.C."
-                    , "ridership": 534
-                    , "route_id": 47612
-                    , "route_type": 0.03526
-                    , "shape_dist_traveled": 14.8692
-                    , "total_emmision": 279.969787728
-                    , "emmisions_per_person": 0.524287992
-  }
-                , {
-                    "rank": 150
-                    , "route_short_name": 171
-                    , "route_name": "Mt. Dennis"
-                    , "ridership": 420
-                    , "route_id": 47580
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 3.2554
-                    , "total_emmision": 120.05980308
-                    , "emmisions_per_person": 0.285856674
-  }
-                , {
-                    "rank": 151
-                    , "route_short_name": 143
-                    , "route_name": "Downtown/Beach Express"
-                    , "ridership": 415
-                    , "route_id": 47567
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 11.2404
-                    , "total_emmision": 409.61310246
-                    , "emmisions_per_person": 0.987019524
-  }
-                , {
-                    "rank": 154
-                    , "route_short_name": 101
-                    , "route_name": "Downsview Park"
-                    , "ridership": 292
-                    , "route_id": 47529
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 3.853
-                    , "total_emmision": 98.79292356
-                    , "emmisions_per_person": 0.33833193
-  }
-                , {
-                    "rank": 155
-                    , "route_short_name": 145
-                    , "route_name": "Downtown/Humber Bay Expr."
-                    , "ridership": 263
-                    , "route_id": 47569
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 18.1161
-                    , "total_emmision": 418.373756883
-                    , "emmisions_per_person": 1.590774741
-  }
-                , {
-                    "rank": 156
-                    , "route_short_name": 307
-                    , "route_name": "Eglinton West N.B."
-                    , "ridership": 255
-                    , "route_id": 47613
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 20.7474
-                    , "total_emmision": 464.56644447
-                    , "emmisions_per_person": 1.821829194
-  }
-                , {
-                    "rank": 157
-                    , "route_short_name": 329
-                    , "route_name": "Dufferin N.B."
-                    , "ridership": 250
-                    , "route_id": 47623
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 21.1414
-                    , "total_emmision": 464.1065835
-                    , "emmisions_per_person": 1.856426334
-  }
-                , {
-                    "rank": 159
-                    , "route_short_name": 142
-                    , "route_name": "Downtown/Avenue Rd. Expr."
-                    , "ridership": 225
-                    , "route_id": 47566
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 12.6519
-                    , "total_emmision": 249.966751275
-                    , "emmisions_per_person": 1.110963339
-  }
-                , {
-                    "rank": 163
-                    , "route_short_name": 354
-                    , "route_name": "Lawrence East N.B."
-                    , "ridership": 196
-                    , "route_id": 47637
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 26.3798
-                    , "total_emmision": 454.016406648
-                    , "emmisions_per_person": 2.316410238
-  }
-                , {
-                    "rank": 165
-                    , "route_short_name": 99
-                    , "route_name": "Arrow  Road"
-                    , "ridership": 184
-                    , "route_id": 47723
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 3.4529
-                    , "total_emmision": 55.788643416
-                    , "emmisions_per_person": 0.303199149
-  }
-                , {
-                    "rank": 167
-                    , "route_short_name": 385
-                    , "route_name": "Sheppard East N.B."
-                    , "ridership": 131
-                    , "route_id": 47644
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 20.3922
-                    , "total_emmision": 234.573719742
-                    , "emmisions_per_person": 1.790639082
-  }
-                , {
-                    "rank": 168
-                    , "route_short_name": 141
-                    , "route_name": "Downtown/Mt. Pleasant Expr."
-                    , "ridership": 126
-                    , "route_id": 47565
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 9.9747
-                    , "total_emmision": 110.360679282
-                    , "emmisions_per_person": 0.875878407
-  }
-                , {
-                    "rank": 169
-                    , "route_short_name": 302
-                    , "route_name": "Danforth-McCowan N.B."
-                    , "ridership": 125
-                    , "route_id": 47610
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 19.4983
-                    , "total_emmision": 214.018215375
-                    , "emmisions_per_person": 1.712145723
-  }
-                , {
-                    "rank": 172
-                    , "route_short_name": 322
-                    , "route_name": "Coxwell N.B."
-                    , "ridership": 90
-                    , "route_id": 47620
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 11.0109
-                    , "total_emmision": 87.01804161
-                    , "emmisions_per_person": 0.966867129
-  }
-                , {
-                    "rank": 173
-                    , "route_short_name": 324
-                    , "route_name": "Victoria Park N.B."
-                    , "ridership": 89
-                    , "route_id": 47621
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 17.2119
-                    , "total_emmision": 134.512547571
-                    , "emmisions_per_person": 1.511376939
-  }
-                , {
-                    "rank": 174
-                    , "route_short_name": 352
-                    , "route_name": "Lawrence West N.B."
-                    , "ridership": 79
-                    , "route_id": 47635
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 2.7976
-                    , "total_emmision": 19.406923224
-                    , "emmisions_per_person": 0.245657256
-  }
-                , {
-                    "rank": 175
-                    , "route_short_name": 312
-                    , "route_name": "St. Clair N.C."
-                    , "ridership": 70
-                    , "route_id": 47615
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 12.2345
-                    , "total_emmision": 75.20180115
-                    , "emmisions_per_person": 1.074311445
-  }
-                , {
-                    "rank": 176
-                    , "route_short_name": 353
-                    , "route_name": "Steeles East N.B."
-                    , "ridership": 35
-                    , "route_id": 47636
-                    , "route_type": 0.08781
-                    , "shape_dist_traveled": 30.6074
-                    , "total_emmision": 94.06725279
-                    , "emmisions_per_person": 2.687635794
-  }
-]
+  <div id="map"></div>
+  <div id="display_info">
+    <h1 style="color: white; position: relative; left: 120px; width: 0px;">CatchIt!</h1>
+    <input id="startLoc" type="text" placeholder="Start Location" />
+    <br>
+    <input id="endLoc" type="text" placeholder="End Location" />
+    <br>
+    <select class="formdrop" id="type_vehicle">
+      <option value="0" disabled selected style="display: none;">Your Vehicle</option>
+      <option value="0.1270059">Passenger</option>
+      <option value="0.322">Suv</option>
+      <option value="0.2878292">Van</option>
+    </select>
+    <div id="search" style="padding: 0px; margin: 0px;">Search</div>
+    <div id="co2_per_person" style="width: 250px; margin: 0px;"></div>
+    <div id="co2_by_car" style="width: 250px; margin: 0px;"></div>
+    <div id="panel"></div>
+  </div>
+  <script type="text/javascript">
+  var directionsService = new google.maps.DirectionsService();
+  var directionsDisplay = new google.maps.DirectionsRenderer();
+  var map = new google.maps.Map(document.getElementById('map'), {
+    center: {
+      lat: 43.623650
+      , lng: -79.420166
+    }
+    , zoom: 11
+    , mapTypeId: google.maps.MapTypeId.ROADMAP
+  });
+  directionsDisplay.setMap(map);
+  directionsDisplay.setPanel(document.getElementById('panel'));
+  $(document).ready(function () {
+    $("#map").css("width",window.innerWidth-360);
+    $("#map").css("height",window.innerHeight);
+    $("#panel").css("height",window.innerHeight-340);
+    $("#search").on("click", function () {
+      var e = document.getElementById("type_vehicle");
+      if(e.options[e.selectedIndex].value != 0){
+        var request = {
+          origin: $("#startLoc").val() + ' Toronto'
+          , destination: $("#endLoc").val() + ' Toronto'
+          , travelMode: google.maps.DirectionsTravelMode.TRANSIT
+          , transitOptions: {
+            modes: ["BUS"]
+          }
         };
-    </script>
+        directionsService.route(request, function (response, status) {
+          if (status == google.maps.DirectionsStatus.OK) {
+            directionsDisplay.setDirections(response);
+            var routeIntruct = response.routes[0].legs[0].steps;
+            var totCo2 = 0
+            for (var i = 0; i < routeIntruct.length; i++) {
+              var text = routeIntruct[i].instructions;
+              //this instruction is a busing instruction
+              if (text.indexOf('Bus') >= 0) {
+                var arr = text.split(" ");
+                for (var a = 0; a < arr.length; a++) {
+                  if (!isNaN(parseInt(arr[a]))) {
+                    var int = parseInt(arr[a]);
+                    for (var b = 0; b < transit_data.data.length; b++) {
+                      if (transit_data.data[b].route_short_name == int) {
+                        totCo2+=transit_data.data[b].emmisions_per_person;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            $("#co2_per_person").html("You'll emit " + (totCo2).toPrecision(4) + "Kg of co2 on the Bus");
+            var selected_vehicle = e.options[e.selectedIndex].value;
+            var norm_distance = response.routes[0].legs[0].distance.text;
+            norm_distance = norm_distance.substring(0, norm_distance.length - 3);
+            //norm emisions = typical ttc co2 emmisions
+            //console.log(parseFloat(norm_distance) * selected_vehicle);
+            $("#co2_by_car").html("and you'll save " + ((parseFloat(norm_distance) * selected_vehicle) - (totCo2)).toPrecision(4) + " Kg of co2");
+            //console.log(selected_vehicle);
+            //console.log(transit_data.data[b].emmisions_per_person);
+            $("#panel").css("background-color", "white");
+          }
+        });
+        //$("#startLoc").val("");
+        //$("#endLoc").val("");
+      }else{
+        alert("Remember to fill in a vehicle type!");
+      }
+    });
+  });
+  var transit_data = {
+    "data": [
+      {
+        "rank": 1
+        , "route_short_name": 504
+        , "route_name": "King"
+        , "ridership": 64579
+        , "route_id": 47664
+        , "route_type": 0.03526
+        , "shape_dist_traveled": 2.2598
+        , "total_emmision": 5145.69010929
+        , "emmisions_per_person": 0.079680548
+      }
+      , {
+        "rank": 2
+        , "route_short_name": 32
+        , "route_name": "Eglinton West"
+        , "ridership": 48684
+        , "route_id": 47618
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 17.7263
+        , "total_emmision": 75778.9050837
+        , "emmisions_per_person": 1.556546403
+      }
+      , {
+        "rank": 3
+        , "route_short_name": 35
+        , "route_name": "Jane"
+        , "ridership": 45699
+        , "route_id": 47634
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 14.4793
+        , "total_emmision": 58102.9576908
+        , "emmisions_per_person": 1.271427333
+      }
+      , {
+        "rank": 4
+        , "route_short_name": 36
+        , "route_name": "Finch West"
+        , "ridership": 43952
+        , "route_id": 47638
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 11.0272
+        , "total_emmision": 42558.6526833
+        , "emmisions_per_person": 0.968298432
+      }
+      , {
+        "rank": 5
+        , "route_short_name": 510
+        , "route_name": "Spadina"
+        , "ridership": 43804
+        , "route_id": 47670
+        , "route_type": 0.03526
+        , "shape_dist_traveled": 3.1271
+        , "total_emmision": 4829.89676098
+        , "emmisions_per_person": 0.110261546
+      }
+      , {
+        "rank": 6
+        , "route_short_name": 501
+        , "route_name": "Queen"
+        , "ridership": 43464
+        , "route_id": 47661
+        , "route_type": 0.03526
+        , "shape_dist_traveled": 15.1971
+        , "total_emmision": 23290.1733601
+        , "emmisions_per_person": 0.535849746
+      }
+      , {
+        "rank": 7
+        , "route_short_name": 29
+        , "route_name": "Dufferin"
+        , "ridership": 39721
+        , "route_id": 47604
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 9.5664
+        , "total_emmision": 33366.6562221
+        , "emmisions_per_person": 0.840025584
+      }
+      , {
+        "rank": 8
+        , "route_short_name": 506
+        , "route_name": "Carlton"
+        , "ridership": 39601
+        , "route_id": 47666
+        , "route_type": 0.03526
+        , "shape_dist_traveled": 11.2503
+        , "total_emmision": 15709.1455744
+        , "emmisions_per_person": 0.396685578
+      }
+      , {
+        "rank": 9
+        , "route_short_name": 25
+        , "route_name": "Don Mills"
+        , "ridership": 39066
+        , "route_id": 47601
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 16.7017
+        , "total_emmision": 57293.2688373
+        , "emmisions_per_person": 1.466576277
+      }
+      , {
+        "rank": 10
+        , "route_short_name": 512
+        , "route_name": "St. Clair"
+        , "ridership": 38113
+        , "route_id": 47672
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 5.0164
+        , "total_emmision": 16788.3985715
+        , "emmisions_per_person": 0.440490084
+      }
+      , {
+        "rank": 11
+        , "route_short_name": 54
+        , "route_name": "Lawrence East"
+        , "ridership": 36277
+        , "route_id": 47676
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 2.0725
+        , "total_emmision": 6601.91428432
+        , "emmisions_per_person": 0.181986225
+      }
+      , {
+        "rank": 12
+        , "route_short_name": 505
+        , "route_name": "Dundas"
+        , "ridership": 32410
+        , "route_id": 47665
+        , "route_type": 0.03526
+        , "shape_dist_traveled": 1.8805
+        , "total_emmision": 2148.9913963
+        , "emmisions_per_person": 0.06630643
+      }
+      , {
+        "rank": 13
+        , "route_short_name": 60
+        , "route_name": "Steeles West"
+        , "ridership": 29819
+        , "route_id": 47682
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 18.036
+        , "total_emmision": 47225.57765
+        , "emmisions_per_person": 1.58374116
+      }
+      , {
+        "rank": 14
+        , "route_short_name": 34
+        , "route_name": "Eglinton East"
+        , "ridership": 29501
+        , "route_id": 47631
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 12.0439
+        , "total_emmision": 31199.5159154
+        , "emmisions_per_person": 1.057574859
+      }
+      , {
+        "rank": 15
+        , "route_short_name": 53
+        , "route_name": "Steeles East"
+        , "ridership": 28278
+        , "route_id": 47675
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 17.8153
+        , "total_emmision": 44237.0142991
+        , "emmisions_per_person": 1.564361493
+      }
+      , {
+        "rank": 16
+        , "route_short_name": 95
+        , "route_name": "York Mills"
+        , "ridership": 27485
+        , "route_id": 47719
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 21.4925
+        , "total_emmision": 51871.2428411
+        , "emmisions_per_person": 1.887256425
+      }
+      , {
+        "rank": 17
+        , "route_short_name": 85
+        , "route_name": "Sheppard East"
+        , "ridership": 27146
+        , "route_id": 47709
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 25.7197
+        , "total_emmision": 61307.7983801
+        , "emmisions_per_person": 2.258446857
+      }
+      , {
+        "rank": 18
+        , "route_short_name": 102
+        , "route_name": "Markham Rd."
+        , "ridership": 25137
+        , "route_id": 48382
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 17.3971
+        , "total_emmision": 38400.2703661
+        , "emmisions_per_person": 1.527639351
+      }
+      , {
+        "rank": 19
+        , "route_short_name": 24
+        , "route_name": "Victoria Park"
+        , "ridership": 24731
+        , "route_id": 47600
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 14.7956
+        , "total_emmision": 32130.5556599
+        , "emmisions_per_person": 1.299201636
+      }
+      , {
+        "rank": 20
+        , "route_short_name": 96
+        , "route_name": "Wilson"
+        , "ridership": 24700
+        , "route_id": 47720
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 21.1946
+        , "total_emmision": 45969.1163022
+        , "emmisions_per_person": 1.861097826
+      }
+      , {
+        "rank": 21
+        , "route_short_name": 41
+        , "route_name": "Keele"
+        , "ridership": 24597
+        , "route_id": 47650
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 15.7122
+        , "total_emmision": 33936.1926724
+        , "emmisions_per_person": 1.379688282
+      }
+      , {
+        "rank": 22
+        , "route_short_name": 165
+        , "route_name": "Weston Rd. North"
+        , "ridership": 24314
+        , "route_id": 47575
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 27.7536
+        , "total_emmision": 59254.2784794
+        , "emmisions_per_person": 2.437043616
+      }
+      , {
+        "rank": 23
+        , "route_short_name": 7
+        , "route_name": "Bathurst"
+        , "ridership": 24262
+        , "route_id": 47692
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 14.8822
+        , "total_emmision": 31705.7267353
+        , "emmisions_per_person": 1.306805982
+      }
+      , {
+        "rank": 24
+        , "route_short_name": 39
+        , "route_name": "Finch East"
+        , "ridership": 23745
+        , "route_id": 47645
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 1.0254
+        , "total_emmision": 2138.00868063
+        , "emmisions_per_person": 0.090040374
+      }
+      , {
+        "rank": 25
+        , "route_short_name": 52
+        , "route_name": "Lawrence West"
+        , "ridership": 23036
+        , "route_id": 47674
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 15.1795
+        , "total_emmision": 30704.9584132
+        , "emmisions_per_person": 1.332911895
+      }
+      , {
+        "rank": 26
+        , "route_short_name": 63
+        , "route_name": "Ossington"
+        , "ridership": 22694
+        , "route_id": 47685
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 1.1326
+        , "total_emmision": 2257.00013456
+        , "emmisions_per_person": 0.099453606
+      }
+      , {
+        "rank": 27
+        , "route_short_name": 116
+        , "route_name": "Morningside"
+        , "ridership": 22285
+        , "route_id": 47544
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 1.3829
+        , "total_emmision": 2706.12212597
+        , "emmisions_per_person": 0.121432449
+      }
+      , {
+        "rank": 28
+        , "route_short_name": 196
+        , "route_name": "York University Rocket"
+        , "ridership": 21892
+        , "route_id": 47590
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 12.4456
+        , "total_emmision": 23924.6313933
+        , "emmisions_per_person": 1.092848136
+      }
+      , {
+        "rank": 29
+        , "route_short_name": 84
+        , "route_name": "Sheppard West"
+        , "ridership": 19143
+        , "route_id": 47708
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 12.887
+        , "total_emmision": 21662.3617982
+        , "emmisions_per_person": 1.13160747
+      }
+      , {
+        "rank": 30
+        , "route_short_name": 199
+        , "route_name": "Finch Rocket"
+        , "ridership": 19055
+        , "route_id": 47592
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 26.019
+        , "total_emmision": 43535.4994715
+        , "emmisions_per_person": 2.28472839
+      }
+      , {
+        "rank": 31
+        , "route_short_name": 45
+        , "route_name": "Kipling"
+        , "ridership": 18682
+        , "route_id": 47654
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 14.8059
+        , "total_emmision": 24288.5817679
+        , "emmisions_per_person": 1.300106079
+      }
+      , {
+        "rank": 33
+        , "route_short_name": 68
+        , "route_name": "Warden"
+        , "ridership": 17887
+        , "route_id": 47690
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 12.9745
+        , "total_emmision": 20378.4953445
+        , "emmisions_per_person": 1.139290845
+      }
+      , {
+        "rank": 34
+        , "route_short_name": 511
+        , "route_name": "Bathurst"
+        , "ridership": 17394
+        , "route_id": 47671
+        , "route_type": 0.03526
+        , "shape_dist_traveled": 1.413
+        , "total_emmision": 866.61047772
+        , "emmisions_per_person": 0.04982238
+      }
+      , {
+        "rank": 35
+        , "route_short_name": 37
+        , "route_name": "Islington"
+        , "ridership": 17087
+        , "route_id": 47641
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 14.5313
+        , "total_emmision": 21802.9001314
+        , "emmisions_per_person": 1.275993453
+      }
+      , {
+        "rank": 36
+        , "route_short_name": 86
+        , "route_name": "Scarborough"
+        , "ridership": 16381
+        , "route_id": 47710
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 14.0009
+        , "total_emmision": 20139.113114
+        , "emmisions_per_person": 1.229419029
+      }
+      , {
+        "rank": 37
+        , "route_short_name": 100
+        , "route_name": "Flemingdon Park"
+        , "ridership": 15807
+        , "route_id": 47528
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 10.2405
+        , "total_emmision": 14213.9437471
+        , "emmisions_per_person": 0.899218305
+      }
+      , {
+        "rank": 38
+        , "route_short_name": 43
+        , "route_name": "Kennedy"
+        , "ridership": 15494
+        , "route_id": 47652
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 12.2186
+        , "total_emmision": 16623.7491314
+        , "emmisions_per_person": 1.072915266
+      }
+      , {
+        "rank": 39
+        , "route_short_name": 47
+        , "route_name": "Lansdowne"
+        , "ridership": 15354
+        , "route_id": 47656
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 4.3324
+        , "total_emmision": 5841.09218758
+        , "emmisions_per_person": 0.380428044
+      }
+      , {
+        "rank": 40
+        , "route_short_name": 129
+        , "route_name": "McCowan North"
+        , "ridership": 15222
+        , "route_id": 47557
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 7.431
+        , "total_emmision": 9932.60022642
+        , "emmisions_per_person": 0.65251611
+      }
+      , {
+        "rank": 41
+        , "route_short_name": 89
+        , "route_name": "Weston"
+        , "ridership": 15148
+        , "route_id": 47713
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 10.0348
+        , "total_emmision": 13347.7478766
+        , "emmisions_per_person": 0.881155788
+      }
+      , {
+        "rank": 42
+        , "route_short_name": 191
+        , "route_name": "Hwy. 27 Rocket"
+        , "ridership": 12838
+        , "route_id": 47586
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 21.974
+        , "total_emmision": 24771.3952357
+        , "emmisions_per_person": 1.92953694
+      }
+      , {
+        "rank": 43
+        , "route_short_name": 17
+        , "route_name": "Birchmount"
+        , "ridership": 12407
+        , "route_id": 47579
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 13.7967
+        , "total_emmision": 15030.9344324
+        , "emmisions_per_person": 1.211488227
+      }
+      , {
+        "rank": 44
+        , "route_short_name": 57
+        , "route_name": "Midland"
+        , "ridership": 11614
+        , "route_id": 47679
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 11.8784
+        , "total_emmision": 12113.8933187
+        , "emmisions_per_person": 1.043042304
+      }
+      , {
+        "rank": 45
+        , "route_short_name": 509
+        , "route_name": "Harbourfront"
+        , "ridership": 11572
+        , "route_id": 47668
+        , "route_type": 0.03526
+        , "shape_dist_traveled": 1.7378
+        , "total_emmision": 709.072309616
+        , "emmisions_per_person": 0.061274828
+      }
+      , {
+        "rank": 46
+        , "route_short_name": 16
+        , "route_name": "McCowan"
+        , "ridership": 11279
+        , "route_id": 47571
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 9.4125
+        , "total_emmision": 9322.22461837
+        , "emmisions_per_person": 0.826511625
+      }
+      , {
+        "rank": 47
+        , "route_short_name": 38
+        , "route_name": "Highland Creek"
+        , "ridership": 10262
+        , "route_id": 47642
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 12.4365
+        , "total_emmision": 11206.607505
+        , "emmisions_per_person": 1.092049065
+      }
+      , {
+        "rank": 48
+        , "route_short_name": 76
+        , "route_name": "Royal York South"
+        , "ridership": 10063
+        , "route_id": 47699
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 3.2992
+        , "total_emmision": 2915.27879338
+        , "emmisions_per_person": 0.289702752
+      }
+      , {
+        "rank": 49
+        , "route_short_name": 190
+        , "route_name": "Scarborough Rocket"
+        , "ridership": 10061
+        , "route_id": 47585
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 8.853
+        , "total_emmision": 7821.23959773
+        , "emmisions_per_person": 0.77738193
+      }
+      , {
+        "rank": 50
+        , "route_short_name": 133
+        , "route_name": "Neilson"
+        , "ridership": 9950
+        , "route_id": 47561
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 14.437
+        , "total_emmision": 12613.7440515
+        , "emmisions_per_person": 1.26771297
+      }
+      , {
+        "rank": 51
+        , "route_short_name": 134
+        , "route_name": "Progress"
+        , "ridership": 9735
+        , "route_id": 48646
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 7.9375
+        , "total_emmision": 6785.21590312
+        , "emmisions_per_person": 0.696991875
+      }
+      , {
+        "rank": 52
+        , "route_short_name": 73
+        , "route_name": "Royal York"
+        , "ridership": 9598
+        , "route_id": 47696
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 17.2423
+        , "total_emmision": 14531.8169921
+        , "emmisions_per_person": 1.514046363
+      }
+      , {
+        "rank": 53
+        , "route_short_name": 12
+        , "route_name": "Kingston Rd."
+        , "ridership": 9571
+        , "route_id": 47548
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 0.7956
+        , "total_emmision": 668.645718156
+        , "emmisions_per_person": 0.069861636
+      }
+      , {
+        "rank": 54
+        , "route_short_name": 21
+        , "route_name": "Brimley"
+        , "ridership": 9542
+        , "route_id": 47596
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 6.9212
+        , "total_emmision": 5799.15595802
+        , "emmisions_per_person": 0.607750572
+      }
+      , {
+        "rank": 55
+        , "route_short_name": 44
+        , "route_name": "Kipling South"
+        , "ridership": 9387
+        , "route_id": 47653
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 5.8515
+        , "total_emmision": 4823.2303582
+        , "emmisions_per_person": 0.513820215
+      }
+      , {
+        "rank": 56
+        , "route_short_name": 11
+        , "route_name": "Bayview"
+        , "ridership": 9317
+        , "route_id": 47538
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 4.7315
+        , "total_emmision": 3870.96208075
+        , "emmisions_per_person": 0.415473015
+      }
+      , {
+        "rank": 57
+        , "route_short_name": 94
+        , "route_name": "Wellesley"
+        , "ridership": 8983
+        , "route_id": 47718
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 6.3696
+        , "total_emmision": 5024.32283621
+        , "emmisions_per_person": 0.559314576
+      }
+      , {
+        "rank": 58
+        , "route_short_name": 110
+        , "route_name": "Islington South"
+        , "ridership": 8972
+        , "route_id": 47539
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 2.0434
+        , "total_emmision": 1609.85451929
+        , "emmisions_per_person": 0.179430954
+      }
+      , {
+        "rank": 59
+        , "route_short_name": 42
+        , "route_name": "Cummer"
+        , "ridership": 8610
+        , "route_id": 47651
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 11.5839
+        , "total_emmision": 8757.93924999
+        , "emmisions_per_person": 1.017182259
+      }
+      , {
+        "rank": 60
+        , "route_short_name": 70
+        , "route_name": "O'Connor"
+        , "ridership": 8605
+        , "route_id": 47693
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 6.2538
+        , "total_emmision": 4725.40286169
+        , "emmisions_per_person": 0.549146178
+      }
+      , {
+        "rank": 61
+        , "route_short_name": 79
+        , "route_name": "Scarlett Rd."
+        , "ridership": 8362
+        , "route_id": 47702
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 9.034
+        , "total_emmision": 6633.37006548
+        , "emmisions_per_person": 0.79327554
+      }
+      , {
+        "rank": 62
+        , "route_short_name": 168
+        , "route_name": "Symington"
+        , "ridership": 8285
+        , "route_id": 47577
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 5.0072
+        , "total_emmision": 3642.76729212
+        , "emmisions_per_person": 0.439682232
+      }
+      , {
+        "rank": 63
+        , "route_short_name": 87
+        , "route_name": "Cosburn"
+        , "ridership": 8191
+        , "route_id": 47711
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 7.366
+        , "total_emmision": 5298.00809586
+        , "emmisions_per_person": 0.64680846
+      }
+      , {
+        "rank": 64
+        , "route_short_name": 6
+        , "route_name": "Bay"
+        , "ridership": 7944
+        , "route_id": 47681
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 5.9953
+        , "total_emmision": 4182.09729559
+        , "emmisions_per_person": 0.526447293
+      }
+      , {
+        "rank": 65
+        , "route_short_name": 112
+        , "route_name": "West Mall"
+        , "ridership": 7922
+        , "route_id": 47541
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 9.8932
+        , "total_emmision": 6882.01482842
+        , "emmisions_per_person": 0.868721892
+      }
+      , {
+        "rank": 66
+        , "route_short_name": 106
+        , "route_name": "York University"
+        , "ridership": 7687
+        , "route_id": 47534
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 8.1223
+        , "total_emmision": 5482.51570598
+        , "emmisions_per_person": 0.713219163
+      }
+      , {
+        "rank": 67
+        , "route_short_name": 75
+        , "route_name": "Sherbourne"
+        , "ridership": 7468
+        , "route_id": 47698
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 4.2437
+        , "total_emmision": 2782.87027
+        , "emmisions_per_person": 0.372639297
+      }
+      , {
+        "rank": 68
+        , "route_short_name": 22
+        , "route_name": "Coxwell"
+        , "ridership": 7092
+        , "route_id": 47597
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 3.2925
+        , "total_emmision": 2050.3995021
+        , "emmisions_per_person": 0.289114425
+      }
+      , {
+        "rank": 69
+        , "route_short_name": 46
+        , "route_name": "Martin Grove"
+        , "ridership": 6927
+        , "route_id": 47655
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 16.2604
+        , "total_emmision": 9890.54879015
+        , "emmisions_per_person": 1.427825724
+      }
+      , {
+        "rank": 70
+        , "route_short_name": 108
+        , "route_name": "Downsview"
+        , "ridership": 6841
+        , "route_id": 47536
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 11.7056
+        , "total_emmision": 7031.65002298
+        , "emmisions_per_person": 1.027868736
+      }
+      , {
+        "rank": 71
+        , "route_short_name": 72
+        , "route_name": "Pape"
+        , "ridership": 6839
+        , "route_id": 47695
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 8.3975
+        , "total_emmision": 5042.97242453
+        , "emmisions_per_person": 0.737384475
+      }
+      , {
+        "rank": 72
+        , "route_short_name": 161
+        , "route_name": "Rogers Rd."
+        , "ridership": 6606
+        , "route_id": 47573
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 9.7118
+        , "total_emmision": 5633.55160175
+        , "emmisions_per_person": 0.852793158
+      }
+      , {
+        "rank": 73
+        , "route_short_name": 123
+        , "route_name": "Shorncliffe"
+        , "ridership": 6448
+        , "route_id": 47552
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 3.1504
+        , "total_emmision": 1783.75295155
+        , "emmisions_per_person": 0.276636624
+      }
+      , {
+        "rank": 74
+        , "route_short_name": 90
+        , "route_name": "Vaughan"
+        , "ridership": 6417
+        , "route_id": 47715
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 2.599
+        , "total_emmision": 1464.47612523
+        , "emmisions_per_person": 0.22821819
+      }
+      , {
+        "rank": 75
+        , "route_short_name": 64
+        , "route_name": "Main"
+        , "ridership": 6409
+        , "route_id": 47686
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 2.2775
+        , "total_emmision": 1281.71844547
+        , "emmisions_per_person": 0.199987275
+      }
+      , {
+        "rank": 76
+        , "route_short_name": 111
+        , "route_name": "East Mall"
+        , "ridership": 6376
+        , "route_id": 47540
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 8.4289
+        , "total_emmision": 4719.14353658
+        , "emmisions_per_person": 0.740141709
+      }
+      , {
+        "rank": 77
+        , "route_short_name": 131
+        , "route_name": "Nugget"
+        , "ridership": 6270
+        , "route_id": 47559
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 10.0684
+        , "total_emmision": 5543.34589908
+        , "emmisions_per_person": 0.884106204
+      }
+      , {
+        "rank": 78
+        , "route_short_name": 23
+        , "route_name": "Dawes"
+        , "ridership": 6193
+        , "route_id": 47599
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 3.993
+        , "total_emmision": 2171.42266869
+        , "emmisions_per_person": 0.35062533
+      }
+      , {
+        "rank": 79
+        , "route_short_name": 20
+        , "route_name": "Cliffside"
+        , "ridership": 6112
+        , "route_id": 47595
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 10.1334
+        , "total_emmision": 5438.54227565
+        , "emmisions_per_person": 0.889813854
+      }
+      , {
+        "rank": 80
+        , "route_short_name": 81
+        , "route_name": "Thorncliffe Park"
+        , "ridership": 6039
+        , "route_id": 47705
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 4.087
+        , "total_emmision": 2167.27311933
+        , "emmisions_per_person": 0.35887947
+      }
+      , {
+        "rank": 81
+        , "route_short_name": 91
+        , "route_name": "Woodbine"
+        , "ridership": 5589
+        , "route_id": 47716
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 11.7239
+        , "total_emmision": 5753.73945815
+        , "emmisions_per_person": 1.029475659
+      }
+      , {
+        "rank": 82
+        , "route_short_name": 69
+        , "route_name": "Warden South"
+        , "ridership": 5494
+        , "route_id": 47691
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 1.612
+        , "total_emmision": 777.67416168
+        , "emmisions_per_person": 0.14154972
+      }
+      , {
+        "rank": 83
+        , "route_short_name": 67
+        , "route_name": "Pharmacy"
+        , "ridership": 5318
+        , "route_id": 47689
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 4.575
+        , "total_emmision": 2136.4041285
+        , "emmisions_per_person": 0.40173075
+      }
+      , {
+        "rank": 84
+        , "route_short_name": 109
+        , "route_name": "Ranee"
+        , "ridership": 5270
+        , "route_id": 47537
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 2.3989
+        , "total_emmision": 1110.11184543
+        , "emmisions_per_person": 0.210647409
+      }
+      , {
+        "rank": 85
+        , "route_short_name": 88
+        , "route_name": "South Leaside"
+        , "ridership": 5008
+        , "route_id": 47712
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 1.8519
+        , "total_emmision": 814.377617712
+        , "emmisions_per_person": 0.162615339
+      }
+      , {
+        "rank": 86
+        , "route_short_name": 40
+        , "route_name": "Junction"
+        , "ridership": 4809
+        , "route_id": 47649
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 3.1736
+        , "total_emmision": 1340.14238114
+        , "emmisions_per_person": 0.278673816
+      }
+      , {
+        "rank": 87
+        , "route_short_name": 113
+        , "route_name": "Danforth Rd."
+        , "ridership": 4795
+        , "route_id": 47542
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 7.5566
+        , "total_emmision": 3181.69849557
+        , "emmisions_per_person": 0.663545046
+      }
+      , {
+        "rank": 88
+        , "route_short_name": 105
+        , "route_name": "Dufferin North"
+        , "ridership": 4781
+        , "route_id": 47533
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 13.6043
+        , "total_emmision": 5711.35192032
+        , "emmisions_per_person": 1.194593583
+      }
+      , {
+        "rank": 89
+        , "route_short_name": 66
+        , "route_name": "Prince Edward"
+        , "ridership": 4704
+        , "route_id": 47688
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 6.7058
+        , "total_emmision": 2769.88594579
+        , "emmisions_per_person": 0.588836298
+      }
+      , {
+        "rank": 90
+        , "route_short_name": 192
+        , "route_name": "Airport Rocket"
+        , "ridership": 4644
+        , "route_id": 47587
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 12.2449
+        , "total_emmision": 4993.34336284
+        , "emmisions_per_person": 1.075224669
+      }
+      , {
+        "rank": 91
+        , "route_short_name": 97
+        , "route_name": "Yonge"
+        , "ridership": 4175
+        , "route_id": 47721
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 9.0956
+        , "total_emmision": 3334.5083553
+        , "emmisions_per_person": 0.798684636
+      }
+      , {
+        "rank": 92
+        , "route_short_name": 51
+        , "route_name": "Leslie"
+        , "ridership": 4117
+        , "route_id": 47669
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 17.5305
+        , "total_emmision": 6337.51714499
+        , "emmisions_per_person": 1.539353205
+      }
+      , {
+        "rank": 93
+        , "route_short_name": 107
+        , "route_name": "Keele North"
+        , "ridership": 4111
+        , "route_id": 47535
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 20.9221
+        , "total_emmision": 7552.60422971
+        , "emmisions_per_person": 1.837169601
+      }
+      , {
+        "rank": 94
+        , "route_short_name": 9
+        , "route_name": "Bellamy"
+        , "ridership": 4081
+        , "route_id": 47714
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 13.2422
+        , "total_emmision": 4745.37693214
+        , "emmisions_per_person": 1.162797582
+      }
+      , {
+        "rank": 95
+        , "route_short_name": 65
+        , "route_name": "Parliament"
+        , "ridership": 3961
+        , "route_id": 47687
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 2.8839
+        , "total_emmision": 1003.0648609
+        , "emmisions_per_person": 0.253235259
+      }
+      , {
+        "rank": 96
+        , "route_short_name": 122
+        , "route_name": "Graydon Hall"
+        , "ridership": 3887
+        , "route_id": 47551
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 0.5896
+        , "total_emmision": 201.240780312
+        , "emmisions_per_person": 0.051772776
+      }
+      , {
+        "rank": 97
+        , "route_short_name": 502
+        , "route_name": "Downtowner"
+        , "ridership": 3812
+        , "route_id": 47662
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 3.1447
+        , "total_emmision": 1052.63083988
+        , "emmisions_per_person": 0.276136107
+      }
+      , {
+        "rank": 98
+        , "route_short_name": 56
+        , "route_name": "Leaside"
+        , "ridership": 3758
+        , "route_id": 47678
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 5.1757
+        , "total_emmision": 1707.92913949
+        , "emmisions_per_person": 0.454478217
+      }
+      , {
+        "rank": 99
+        , "route_short_name": 124
+        , "route_name": "Sunnybrook"
+        , "ridership": 3692
+        , "route_id": 47553
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 2.935
+        , "total_emmision": 951.5109162
+        , "emmisions_per_person": 0.25772235
+      }
+      , {
+        "rank": 100
+        , "route_short_name": 26
+        , "route_name": "Dupont"
+        , "ridership": 3608
+        , "route_id": 47602
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 9.7113
+        , "total_emmision": 3076.71930482
+        , "emmisions_per_person": 0.852749253
+      }
+      , {
+        "rank": 101
+        , "route_short_name": 61
+        , "route_name": "Avenue Rd. North"
+        , "ridership": 3603
+        , "route_id": 47683
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 5.9346
+        , "total_emmision": 1877.58536528
+        , "emmisions_per_person": 0.521117226
+      }
+      , {
+        "rank": 102
+        , "route_short_name": 71
+        , "route_name": "Runnymede"
+        , "ridership": 3568
+        , "route_id": 47694
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 8.1093
+        , "total_emmision": 2540.69299454
+        , "emmisions_per_person": 0.712077633
+      }
+      , {
+        "rank": 103
+        , "route_short_name": 160
+        , "route_name": "Bathurst North"
+        , "ridership": 3504
+        , "route_id": 47572
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 9.4053
+        , "total_emmision": 2893.88139307
+        , "emmisions_per_person": 0.825879393
+      }
+      , {
+        "rank": 104
+        , "route_short_name": 104
+        , "route_name": "Faywood"
+        , "ridership": 3326
+        , "route_id": 47532
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 8.1913
+        , "total_emmision": 2392.31880428
+        , "emmisions_per_person": 0.719278053
+      }
+      , {
+        "rank": 105
+        , "route_short_name": 31
+        , "route_name": "Greenwood"
+        , "ridership": 3311
+        , "route_id": 47614
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 3.4664
+        , "total_emmision": 1007.81735762
+        , "emmisions_per_person": 0.304384584
+      }
+      , {
+        "rank": 106
+        , "route_short_name": 92
+        , "route_name": "Woodbine South"
+        , "ridership": 3159
+        , "route_id": 47717
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 3.1075
+        , "total_emmision": 861.994987425
+        , "emmisions_per_person": 0.272869575
+      }
+      , {
+        "rank": 107
+        , "route_short_name": 49
+        , "route_name": "Bloor West"
+        , "ridership": 3124
+        , "route_id": 47658
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 5.28
+        , "total_emmision": 1448.4013632
+        , "emmisions_per_person": 0.4636368
+      }
+      , {
+        "rank": 108
+        , "route_short_name": 50
+        , "route_name": "Burnhamthorpe"
+        , "ridership": 3111
+        , "route_id": 47660
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 5.7504
+        , "total_emmision": 1570.87650326
+        , "emmisions_per_person": 0.504942624
+      }
+      , {
+        "rank": 109
+        , "route_short_name": 125
+        , "route_name": "Drewry"
+        , "ridership": 2897
+        , "route_id": 47554
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 4.0332
+        , "total_emmision": 1025.98788092
+        , "emmisions_per_person": 0.354155292
+      }
+      , {
+        "rank": 110
+        , "route_short_name": 62
+        , "route_name": "Mortimer"
+        , "ridership": 2860
+        , "route_id": 47684
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 2.7419
+        , "total_emmision": 688.59144354
+        , "emmisions_per_person": 0.240766239
+      }
+      , {
+        "rank": 111
+        , "route_short_name": 132
+        , "route_name": "Milner"
+        , "ridership": 2810
+        , "route_id": 47560
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 9.0253
+        , "total_emmision": 2226.95757633
+        , "emmisions_per_person": 0.792511593
+      }
+      , {
+        "rank": 112
+        , "route_short_name": 117
+        , "route_name": "Alness"
+        , "ridership": 2771
+        , "route_id": 47545
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 8.1265
+        , "total_emmision": 1977.35225101
+        , "emmisions_per_person": 0.713587965
+      }
+      , {
+        "rank": 113
+        , "route_short_name": 59
+        , "route_name": "Maple Leaf"
+        , "ridership": 2739
+        , "route_id": 47680
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 10.7136
+        , "total_emmision": 2576.74497062
+        , "emmisions_per_person": 0.940761216
+      }
+      , {
+        "rank": 114
+        , "route_short_name": 15
+        , "route_name": "Evans"
+        , "ridership": 2724
+        , "route_id": 47570
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 8.4489
+        , "total_emmision": 2020.92990412
+        , "emmisions_per_person": 0.741897909
+      }
+      , {
+        "rank": 115
+        , "route_short_name": 98
+        , "route_name": "Willowdale-Senlac"
+        , "ridership": 2644
+        , "route_id": 47722
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 5.6233
+        , "total_emmision": 1305.55953661
+        , "emmisions_per_person": 0.493781973
+      }
+      , {
+        "rank": 116
+        , "route_short_name": 126
+        , "route_name": "Christie"
+        , "ridership": 2607
+        , "route_id": 47555
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 3.3033
+        , "total_emmision": 756.193649211
+        , "emmisions_per_person": 0.290062773
+      }
+      , {
+        "rank": 117
+        , "route_short_name": 77
+        , "route_name": "Swansea"
+        , "ridership": 2554
+        , "route_id": 47700
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 3.6997
+        , "total_emmision": 829.719657978
+        , "emmisions_per_person": 0.324870657
+      }
+      , {
+        "rank": 118
+        , "route_short_name": 30
+        , "route_name": "Lambton"
+        , "ridership": 2516
+        , "route_id": 47607
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 9.6195
+        , "total_emmision": 2125.23575022
+        , "emmisions_per_person": 0.844688295
+      }
+      , {
+        "rank": 119
+        , "route_short_name": 14
+        , "route_name": "Glencairn"
+        , "ridership": 2491
+        , "route_id": 47564
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 6.7072
+        , "total_emmision": 1467.09744691
+        , "emmisions_per_person": 0.588959232
+      }
+      , {
+        "rank": 120
+        , "route_short_name": 48
+        , "route_name": "Rathburn"
+        , "ridership": 2477
+        , "route_id": 47657
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 8.7226
+        , "total_emmision": 1897.21234036
+        , "emmisions_per_person": 0.765931506
+      }
+      , {
+        "rank": 121
+        , "route_short_name": 135
+        , "route_name": "Gerrard"
+        , "ridership": 2358
+        , "route_id": 47563
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 5.7007
+        , "total_emmision": 1180.36402519
+        , "emmisions_per_person": 0.500578467
+      }
+      , {
+        "rank": 122
+        , "route_short_name": 83
+        , "route_name": "Jones"
+        , "ridership": 2283
+        , "route_id": 47707
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 4.2715
+        , "total_emmision": 856.308587445
+        , "emmisions_per_person": 0.375080415
+      }
+      , {
+        "rank": 123
+        , "route_short_name": 80
+        , "route_name": "Queensway"
+        , "ridership": 2224
+        , "route_id": 47704
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 8.7394
+        , "total_emmision": 1706.71253194
+        , "emmisions_per_person": 0.767406714
+      }
+      , {
+        "rank": 124
+        , "route_short_name": 503
+        , "route_name": "Kingston Rd."
+        , "ridership": 2214
+        , "route_id": 47663
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 3.133
+        , "total_emmision": 609.09072822
+        , "emmisions_per_person": 0.27510873
+      }
+      , {
+        "rank": 126
+        , "route_short_name": 5
+        , "route_name": "Avenue Rd."
+        , "ridership": 2057
+        , "route_id": 47659
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 5.9796
+        , "total_emmision": 1080.06626653
+        , "emmisions_per_person": 0.525068676
+      }
+      , {
+        "rank": 127
+        , "route_short_name": 130
+        , "route_name": "Middlefield"
+        , "ridership": 1944
+        , "route_id": 47558
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 7.8729
+        , "total_emmision": 1343.92481446
+        , "emmisions_per_person": 0.691319349
+      }
+      , {
+        "rank": 129
+        , "route_short_name": 78
+        , "route_name": "St. Andrews"
+        , "ridership": 1791
+        , "route_id": 47701
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 4.7076
+        , "total_emmision": 740.353471596
+        , "emmisions_per_person": 0.413374356
+      }
+      , {
+        "rank": 130
+        , "route_short_name": 127
+        , "route_name": "Davenport"
+        , "ridership": 1649
+        , "route_id": 47556
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 6.0301
+        , "total_emmision": 873.150580569
+        , "emmisions_per_person": 0.529503081
+      }
+      , {
+        "rank": 131
+        , "route_short_name": 300
+        , "route_name": "Bloor-Danforth N.B."
+        , "ridership": 1577
+        , "route_id": 47608
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 33.1258
+        , "total_emmision": 4587.14053735
+        , "emmisions_per_person": 2.908776498
+      }
+      , {
+        "rank": 132
+        , "route_short_name": 169
+        , "route_name": "Huntingwood"
+        , "ridership": 1514
+        , "route_id": 47578
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 12.0345
+        , "total_emmision": 1599.91865973
+        , "emmisions_per_person": 1.056749445
+      }
+      , {
+        "rank": 134
+        , "route_short_name": 82
+        , "route_name": "Rosedale"
+        , "ridership": 1401
+        , "route_id": 47706
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 2.5126
+        , "total_emmision": 309.104599806
+        , "emmisions_per_person": 0.220631406
+      }
+      , {
+        "rank": 135
+        , "route_short_name": 320
+        , "route_name": "Yonge N.B."
+        , "ridership": 1285
+        , "route_id": 47619
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 18.5802
+        , "total_emmision": 2096.51266017
+        , "emmisions_per_person": 1.631527362
+      }
+      , {
+        "rank": 136
+        , "route_short_name": 10
+        , "route_name": "Van Horne"
+        , "ridership": 1212
+        , "route_id": 47527
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 1.3001
+        , "total_emmision": 138.364078572
+        , "emmisions_per_person": 0.114161781
+      }
+      , {
+        "rank": 137
+        , "route_short_name": 55
+        , "route_name": "Warren Park"
+        , "ridership": 1150
+        , "route_id": 47677
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 3.9008
+        , "total_emmision": 393.9086352
+        , "emmisions_per_person": 0.342529248
+      }
+      , {
+        "rank": 138
+        , "route_short_name": 74
+        , "route_name": "Mt. Pleasant"
+        , "ridership": 1137
+        , "route_id": 47697
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 6.1919
+        , "total_emmision": 618.199110243
+        , "emmisions_per_person": 0.543710739
+      }
+      , {
+        "rank": 139
+        , "route_short_name": 120
+        , "route_name": "Calvington"
+        , "ridership": 1135
+        , "route_id": 47549
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 9.4696
+        , "total_emmision": 943.78152876
+        , "emmisions_per_person": 0.831525576
+      }
+      , {
+        "rank": 140
+        , "route_short_name": 115
+        , "route_name": "Silver Hills"
+        , "ridership": 1116
+        , "route_id": 47543
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 6.0085
+        , "total_emmision": 588.80872566
+        , "emmisions_per_person": 0.527606385
+      }
+      , {
+        "rank": 141
+        , "route_short_name": 167
+        , "route_name": "Pharmacy North"
+        , "ridership": 1115
+        , "route_id": 47576
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 7.6431
+        , "total_emmision": 748.321781265
+        , "emmisions_per_person": 0.671140611
+      }
+      , {
+        "rank": 142
+        , "route_short_name": 28
+        , "route_name": "Davisville"
+        , "ridership": 1043
+        , "route_id": 47603
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 4.9289
+        , "total_emmision": 451.417397487
+        , "emmisions_per_person": 0.432806709
+      }
+      , {
+        "rank": 143
+        , "route_short_name": 8
+        , "route_name": "Broadview"
+        , "ridership": 920
+        , "route_id": 47703
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 4.283
+        , "total_emmision": 346.0030116
+        , "emmisions_per_person": 0.37609023
+      }
+      , {
+        "rank": 145
+        , "route_short_name": 162
+        , "route_name": "Lawrence-Donway"
+        , "ridership": 672
+        , "route_id": 47574
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 1.1226
+        , "total_emmision": 66.242740032
+        , "emmisions_per_person": 0.098575506
+      }
+      , {
+        "rank": 146
+        , "route_short_name": 33
+        , "route_name": "Forest Hill"
+        , "ridership": 615
+        , "route_id": 47624
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 3.4697
+        , "total_emmision": 187.374729555
+        , "emmisions_per_person": 0.304674357
+      }
+      , {
+        "rank": 147
+        , "route_short_name": 144
+        , "route_name": "Downtown/Don Valley Expr."
+        , "ridership": 607
+        , "route_id": 47568
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 15.2832
+        , "total_emmision": 814.604799744
+        , "emmisions_per_person": 1.342017792
+      }
+      , {
+        "rank": 148
+        , "route_short_name": 301
+        , "route_name": "Queen N.C."
+        , "ridership": 572
+        , "route_id": 47609
+        , "route_type": 0.03526
+        , "shape_dist_traveled": 25.9067
+        , "total_emmision": 522.504978424
+        , "emmisions_per_person": 0.913470242
+      }
+      , {
+        "rank": 149
+        , "route_short_name": 306
+        , "route_name": "Carlton N.C."
+        , "ridership": 534
+        , "route_id": 47612
+        , "route_type": 0.03526
+        , "shape_dist_traveled": 14.8692
+        , "total_emmision": 279.969787728
+        , "emmisions_per_person": 0.524287992
+      }
+      , {
+        "rank": 150
+        , "route_short_name": 171
+        , "route_name": "Mt. Dennis"
+        , "ridership": 420
+        , "route_id": 47580
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 3.2554
+        , "total_emmision": 120.05980308
+        , "emmisions_per_person": 0.285856674
+      }
+      , {
+        "rank": 151
+        , "route_short_name": 143
+        , "route_name": "Downtown/Beach Express"
+        , "ridership": 415
+        , "route_id": 47567
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 11.2404
+        , "total_emmision": 409.61310246
+        , "emmisions_per_person": 0.987019524
+      }
+      , {
+        "rank": 154
+        , "route_short_name": 101
+        , "route_name": "Downsview Park"
+        , "ridership": 292
+        , "route_id": 47529
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 3.853
+        , "total_emmision": 98.79292356
+        , "emmisions_per_person": 0.33833193
+      }
+      , {
+        "rank": 155
+        , "route_short_name": 145
+        , "route_name": "Downtown/Humber Bay Expr."
+        , "ridership": 263
+        , "route_id": 47569
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 18.1161
+        , "total_emmision": 418.373756883
+        , "emmisions_per_person": 1.590774741
+      }
+      , {
+        "rank": 156
+        , "route_short_name": 307
+        , "route_name": "Eglinton West N.B."
+        , "ridership": 255
+        , "route_id": 47613
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 20.7474
+        , "total_emmision": 464.56644447
+        , "emmisions_per_person": 1.821829194
+      }
+      , {
+        "rank": 157
+        , "route_short_name": 329
+        , "route_name": "Dufferin N.B."
+        , "ridership": 250
+        , "route_id": 47623
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 21.1414
+        , "total_emmision": 464.1065835
+        , "emmisions_per_person": 1.856426334
+      }
+      , {
+        "rank": 159
+        , "route_short_name": 142
+        , "route_name": "Downtown/Avenue Rd. Expr."
+        , "ridership": 225
+        , "route_id": 47566
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 12.6519
+        , "total_emmision": 249.966751275
+        , "emmisions_per_person": 1.110963339
+      }
+      , {
+        "rank": 163
+        , "route_short_name": 354
+        , "route_name": "Lawrence East N.B."
+        , "ridership": 196
+        , "route_id": 47637
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 26.3798
+        , "total_emmision": 454.016406648
+        , "emmisions_per_person": 2.316410238
+      }
+      , {
+        "rank": 165
+        , "route_short_name": 99
+        , "route_name": "Arrow  Road"
+        , "ridership": 184
+        , "route_id": 47723
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 3.4529
+        , "total_emmision": 55.788643416
+        , "emmisions_per_person": 0.303199149
+      }
+      , {
+        "rank": 167
+        , "route_short_name": 385
+        , "route_name": "Sheppard East N.B."
+        , "ridership": 131
+        , "route_id": 47644
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 20.3922
+        , "total_emmision": 234.573719742
+        , "emmisions_per_person": 1.790639082
+      }
+      , {
+        "rank": 168
+        , "route_short_name": 141
+        , "route_name": "Downtown/Mt. Pleasant Expr."
+        , "ridership": 126
+        , "route_id": 47565
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 9.9747
+        , "total_emmision": 110.360679282
+        , "emmisions_per_person": 0.875878407
+      }
+      , {
+        "rank": 169
+        , "route_short_name": 302
+        , "route_name": "Danforth-McCowan N.B."
+        , "ridership": 125
+        , "route_id": 47610
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 19.4983
+        , "total_emmision": 214.018215375
+        , "emmisions_per_person": 1.712145723
+      }
+      , {
+        "rank": 172
+        , "route_short_name": 322
+        , "route_name": "Coxwell N.B."
+        , "ridership": 90
+        , "route_id": 47620
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 11.0109
+        , "total_emmision": 87.01804161
+        , "emmisions_per_person": 0.966867129
+      }
+      , {
+        "rank": 173
+        , "route_short_name": 324
+        , "route_name": "Victoria Park N.B."
+        , "ridership": 89
+        , "route_id": 47621
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 17.2119
+        , "total_emmision": 134.512547571
+        , "emmisions_per_person": 1.511376939
+      }
+      , {
+        "rank": 174
+        , "route_short_name": 352
+        , "route_name": "Lawrence West N.B."
+        , "ridership": 79
+        , "route_id": 47635
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 2.7976
+        , "total_emmision": 19.406923224
+        , "emmisions_per_person": 0.245657256
+      }
+      , {
+        "rank": 175
+        , "route_short_name": 312
+        , "route_name": "St. Clair N.C."
+        , "ridership": 70
+        , "route_id": 47615
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 12.2345
+        , "total_emmision": 75.20180115
+        , "emmisions_per_person": 1.074311445
+      }
+      , {
+        "rank": 176
+        , "route_short_name": 353
+        , "route_name": "Steeles East N.B."
+        , "ridership": 35
+        , "route_id": 47636
+        , "route_type": 0.08781
+        , "shape_dist_traveled": 30.6074
+        , "total_emmision": 94.06725279
+        , "emmisions_per_person": 2.687635794
+      }
+    ]
+  };
+  </script>
 </body>
 
 </html>
