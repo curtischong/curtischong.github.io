@@ -12,7 +12,6 @@ $(document).ready(function() {
   var vel = [];
   const numCases = 21; // the cases = 20
   const timeInterval = 3;
-  //if (window.DeviceOrientationEvent) {
 
   var sendData = function(){
     isMeasuring = false;
@@ -31,7 +30,7 @@ $(document).ready(function() {
     cel = [];
   }
 
-
+if (window.DeviceOrientationEvent) {
   window.addEventListener('devicemotion', function(event) {
     if(isMeasuring){
       count1++;
@@ -39,7 +38,7 @@ $(document).ready(function() {
         maxAX = event.acceleration.x.toFixed(2);
         maxAY = event.acceleration.y.toFixed(2);
         maxAZ = event.acceleration.z.toFixed(2);
-        $("#words").html(maxAX + " " + maxAY + " " + maxAZ + " " + count1);
+        $("#words").html(maxAX + " " + maxAY + " " + maxAZ);
         acc.push([maxAX,maxAY,maxAZ]);
         if(acc.length >= numCases && acc.length >= numCases){
           sendData();
@@ -47,8 +46,10 @@ $(document).ready(function() {
       }
     }
   });
-  //  }
-  //  if (window.DeviceOrientationEvent) {
+}else{
+  $("#words").html("sorry your device doesn't have an accelerometer :(");
+}
+  if (window.DeviceOrientationEvent) {
   window.addEventListener("deviceorientation", function(event) {
     if(isMeasuring){
       count2++;
@@ -67,6 +68,9 @@ $(document).ready(function() {
       }
     }
   });
+}else{
+  $("#words").html("sorry your device doesn't have a gyroscope :(");
+}
 
   $("#btn1").on("click",function(){
     isMeasuring = true;
